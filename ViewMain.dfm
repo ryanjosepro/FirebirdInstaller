@@ -2,7 +2,7 @@ object WindowMain: TWindowMain
   Left = 0
   Top = 0
   Caption = 'Instalador Firebird'
-  ClientHeight = 550
+  ClientHeight = 411
   ClientWidth = 344
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,7 +13,7 @@ object WindowMain: TWindowMain
   OldCreateOrder = False
   DesignSize = (
     344
-    550)
+    411)
   PixelsPerInch = 96
   TextHeight = 13
   object LblVersion: TLabel
@@ -40,6 +40,20 @@ object WindowMain: TWindowMain
     ParentShowHint = False
     ShowHint = True
   end
+  object LblServiceName: TLabel
+    Left = 8
+    Top = 115
+    Width = 79
+    Height = 13
+    Caption = 'Nome do servi'#231'o'
+  end
+  object LblPort: TLabel
+    Left = 271
+    Top = 115
+    Width = 26
+    Height = 13
+    Caption = 'Porta'
+  end
   object BoxVersion: TComboBox
     Left = 8
     Top = 32
@@ -53,7 +67,6 @@ object WindowMain: TWindowMain
       'Firebird 2.1.7.18553'
       'Firebird 2.5.8.27089'
       'Firebird 3.0.4.33054')
-    ExplicitWidth = 377
   end
   object TxtPath: TEdit
     Left = 8
@@ -62,10 +75,25 @@ object WindowMain: TWindowMain
     Height = 24
     TabOrder = 1
   end
+  object TxtServiceName: TEdit
+    Left = 8
+    Top = 134
+    Width = 257
+    Height = 24
+    TabOrder = 2
+  end
+  object TxtPort: TEdit
+    Left = 271
+    Top = 134
+    Width = 65
+    Height = 24
+    NumbersOnly = True
+    TabOrder = 3
+  end
   object Actions: TActionList
     Images = Images
-    Left = 272
-    Top = 328
+    Left = 296
+    Top = 368
     object ActPath: TAction
       ImageIndex = 0
       OnExecute = ActPathExecute
@@ -78,10 +106,10 @@ object WindowMain: TWindowMain
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 272
-    Top = 280
+    Left = 296
+    Top = 320
     Bitmap = {
-      494C010101000800980110001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C0101010008009C0110001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -225,7 +253,7 @@ object WindowMain: TWindowMain
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 272
-    Top = 152
+    Left = 296
+    Top = 280
   end
 end

@@ -1,0 +1,15 @@
+program FirebirdInstaller;
+
+uses
+  Vcl.Forms,
+  ViewMain in 'Main\ViewMain.pas' {WindowMain},
+  Controller in 'Main\Controller.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TWindowMain, WindowMain);
+  Application.Run;
+end.

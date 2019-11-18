@@ -1,0 +1,129 @@
+
+PCR	Wed Nov 13 15:18:07 2019
+	Guardian starting: "C:\Program Files (x86)\Firebird\Firebird_3_0\firebird.exe"
+
+
+
+PCR	Wed Nov 13 15:22:33 2019
+	XNET error: XNET server initialization failed. Probably another instance of server is already running.
+	operating system directive CreateMutex failed
+	Não é possível criar um arquivo já existente. 
+
+
+PCR	Wed Nov 13 15:22:34 2019
+	Guardian starting: "C:\Program Files (x86)\Firebird\Firebird_3_0\firebird.exe"
+
+
+
+PCR	Wed Nov 13 15:26:14 2019
+	"C:\Program Files (x86)\Firebird\Firebird_3_0\firebird.exe": normal shutdown
+
+
+
+PCR	Wed Nov 13 15:26:14 2019
+	Control services error 1062
+
+
+PCR	Wed Nov 13 15:27:01 2019
+	"C:\Program Files (x86)\Firebird\Firebird_3_0\firebird.exe": normal shutdown
+
+
+
+PCR	Wed Nov 13 15:27:01 2019
+	Control services error 1062
+
+
+PCR	Wed Nov 13 15:34:05 2019
+	XNET error: XNET server initialization failed. Probably another instance of server is already running.
+	operating system directive CreateMutex failed
+	Não é possível criar um arquivo já existente. 
+
+
+PCR	Wed Nov 13 15:34:05 2019
+	Guardian starting: "C:\Users\Ryan\Desktop\Firebird 3.0\Firebird_3_0\firebird.exe"
+
+
+
+PCR	Wed Nov 13 15:40:01 2019
+	INET/inet_error: read errno = 10054, client host = pcr, address = fe80::a9cd:ae0e:8de0:481%14/56921, user = sistema
+
+
+PCR	Thu Nov 14 08:49:24 2019
+	Shutting down the server with 2 active connection(s) to 2 database(s), 0 active service(s)
+
+
+PCR	Thu Nov 14 08:49:24 2019
+	"C:\Users\Ryan\Desktop\Firebird 3.0\Firebird_3_0\firebird.exe": normal shutdown
+
+
+
+PCR	Thu Nov 14 08:49:25 2019
+	Control services error 1062
+
+
+PCR	Thu Nov 14 10:09:17 2019
+	XNET error: XNET server initialization failed. Probably another instance of server is already running.
+	operating system directive CreateMutex failed
+	Não é possível criar um arquivo já existente. 
+
+
+PCR	Thu Nov 14 10:09:18 2019
+	Guardian starting: "C:\Users\Ryan\Desktop\Migração Firebird 3.0\Firebird 3.0\Firebird_3_0\firebird.exe"
+
+
+
+PCR (Client)	Thu Nov 14 13:19:56 2019
+	Guardian starting: "C:\Program Files (x86)\Firebird\Firebird_2_1\bin\fbserver.exe"
+
+
+
+PCR	Thu Nov 14 13:20:01 2019
+	Guardian starting: "C:\Users\Ryan\Desktop\Migração Firebird 3.0\Firebird 3.0\Firebird_3_0\firebird.exe"
+
+
+
+PCR	Thu Nov 14 13:20:01 2019
+	XNET error: XNET server initialization failed. Probably another instance of server is already running.
+	operating system directive CreateMutex failed
+	Não é possível criar um arquivo já existente. 
+
+
+PCR (Client)	Thu Nov 14 13:53:08 2019
+	Guardian starting: "C:\Program Files (x86)\Firebird\Firebird_2_1\bin\fbserver.exe"
+
+
+
+PCR	Thu Nov 14 13:53:13 2019
+	Guardian starting: "C:\Users\Ryan\Desktop\Migração Firebird 3.0\Firebird 3.0\Firebird_3_0\firebird.exe"
+
+
+
+PCR	Thu Nov 14 13:53:14 2019
+	XNET error: XNET server initialization failed. Probably another instance of server is already running.
+	operating system directive CreateMutex failed
+	Não é possível criar um arquivo já existente. 
+
+
+PCR	Sun Nov 17 21:58:06 2019
+	Sweep is started by SWEEPER
+	Database "C:\USERS\RYAN\DESKTOP\MIGRAÇÃO FIREBIRD 3.0\FIREBIRD 3.0\FIREBIRD_3_0\SECURITY3.FDB" 
+	OIT 1695, OAT 21695, OST 21695, Next 21695
+
+
+PCR	Sun Nov 17 21:58:06 2019
+	Sweep is finished
+	Database "C:\USERS\RYAN\DESKTOP\MIGRAÇÃO FIREBIRD 3.0\FIREBIRD 3.0\FIREBIRD_3_0\SECURITY3.FDB" 
+	OIT 21695, OAT 21695, OST 21695, Next 21696
+
+
+PCR	Sun Nov 17 22:42:34 2019
+	Sweep is started by SWEEPER
+	Database "C:\NETSIDEFB3\DB\UPD.DAT" 
+	OIT 3159, OAT 23160, OST 23160, Next 23160
+
+
+PCR	Sun Nov 17 22:42:34 2019
+	Sweep is finished
+	Database "C:\NETSIDEFB3\DB\UPD.DAT" 
+	OIT 23161, OAT 23160, OST 23160, Next 23162
+

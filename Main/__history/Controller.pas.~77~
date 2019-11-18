@@ -1,0 +1,43 @@
+unit Controller;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.StrUtils,
+  Bean, MyUtils;
+
+type
+  TController = class
+  private
+    Configs: TInstallationConfigs;
+  public
+    constructor Create(Configs: TInstallationConfigs);
+    procedure Install;
+    procedure Uninstall;
+  end;
+
+implementation
+
+{ TController }
+
+constructor TController.Create(Configs: TInstallationConfigs);
+begin
+  self.Configs := Configs;
+end;
+
+procedure TController.Install;
+var
+  Source: string;
+begin
+  case Configs.Version.vrFb21 of
+  0:
+    Source := 'a';
+  end;
+end;
+
+procedure TController.Uninstall;
+begin
+
+end;
+
+end.

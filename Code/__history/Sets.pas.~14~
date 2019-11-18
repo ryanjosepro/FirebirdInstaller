@@ -1,0 +1,15 @@
+unit Sets;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.StrUtils;
+
+type
+  TVersion = (vrFb21, vrFb25, vrFb30);
+
+  TInstallationOptions = set of (ioInstRegistry, ioInstGuardian);
+
+implementation
+
+end.
