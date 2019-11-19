@@ -3,7 +3,7 @@ unit MyUtils;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, ShellAPI, Vcl.Forms,
+  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, ShellAPI, Vcl.Forms, Windows,
   Arrays;
 
 type
@@ -30,6 +30,8 @@ type
     class function Extract(StrList: TStringList; Starts: string; Ends: integer; IncStarts: boolean = false): TStringList; overload;
 
     class procedure ExecCmd(Comand: string; ShowCmd: integer = 1);
+
+    class function ExexDos(CommandLine: string; Work: string = 'C:\'): string;
 
     class function AppPath: string;
   end;
@@ -220,6 +222,62 @@ end;
 class procedure TUtils.ExecCmd(Comand: string; ShowCmd: integer = 1);
 begin
   ShellExecute(0, nil, 'cmd.exe', PWideChar(Comand), nil, ShowCmd);
+end;
+
+//Run a DOS program and retrieve its output dynamically while it is running.
+class function TUtils.ExexDos(CommandLine: string; Work: string = 'C:\'): string;
+var
+  SecAtrrs: TSecurityAttributes;
+  StartupInfo: TStartupInfo;
+  ProcessInfo: TProcessInformation;
+  StdOutPipeRead, StdOutPipeWrite: THandle;
+  WasOK: Boolean;
+  pCommandLine: array[0..255] of AnsiChar;
+  BytesRead: Cardinal;
+  WorkDir: string;
+  Handle: Boolean;
+begin
+  Result := '';
+  with SecAtrrs do begin
+    nLength := SizeOf(SecAtrrs);
+    bInheritHandle := True;
+    lpSecurityDescriptor := nil;
+  end;
+  CreatePipe(StdOutPipeRead, StdOutPipeWrite, @SecAtrrs, 0);
+  try
+    with StartupInfo do
+    begin
+      FillChar(StartupInfo, SizeOf(StartupInfo), 0);
+      cb := SizeOf(StartupInfo);
+      dwFlags := STARTF_USESHOWWINDOW or STARTF_USESTDHANDLES;
+      wShowWindow := SW_HIDE;
+      hStdInput := GetStdHandle(STD_INPUT_HANDLE); // don't redirect stdin
+      hStdOutput := StdOutPipeWrite;
+      hStdError := StdOutPipeWrite;
+    end;
+    WorkDir := Work;
+    Handle := CreateProcess(nil, PChar('cmd.exe /C ' + CommandLine),
+                            nil, nil, True, 0, nil,
+                            PChar(WorkDir), StartupInfo, ProcessInfo);
+    CloseHandle(StdOutPipeWrite);
+    if Handle then
+      try
+        repeat
+          WasOK := windows.ReadFile(StdOutPipeRead, pCommandLine, 255, BytesRead, nil);
+          if BytesRead > 0 then
+          begin
+            pCommandLine[BytesRead] := #0;
+            Result := Result + pCommandLine;
+          end;
+        until not WasOK or (BytesRead = 0);
+        WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
+      finally
+        CloseHandle(ProcessInfo.hThread);
+        CloseHandle(ProcessInfo.hProcess);
+      end;
+  finally
+    CloseHandle(StdOutPipeRead);
+  end;
 end;
 
 class function TUtils.AppPath: string;

@@ -43,6 +43,7 @@ type
     procedure ActRemoveExecute(Sender: TObject);
     procedure ActUninstallExecute(Sender: TObject);
     procedure ActInstallExecute(Sender: TObject);
+    procedure ActEscExecute(Sender: TObject);
   end;
 
 var
@@ -105,6 +106,11 @@ begin
   begin
     TxtPath.Text := OpenFilePath.FileName;
   end;
+end;
+
+procedure TWindowMain.ActEscExecute(Sender: TObject);
+begin
+  Close;
 end;
 
 end.

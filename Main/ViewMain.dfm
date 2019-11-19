@@ -1,7 +1,8 @@
 object WindowMain: TWindowMain
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Instalador Firebird'
   ClientHeight = 505
   ClientWidth = 358
@@ -142,13 +143,12 @@ object WindowMain: TWindowMain
     ExplicitTop = 453
   end
   object BtnUninstall: TSpeedButton
-    Left = 272
+    Left = 270
     Top = 457
     Width = 78
     Height = 40
     Action = ActUninstall
     Anchors = [akRight, akBottom]
-    ExplicitTop = 453
   end
   object BoxVersion: TComboBox
     Left = 8
@@ -223,7 +223,7 @@ object WindowMain: TWindowMain
   object CheckInstReg: TCheckBox
     Left = 8
     Top = 202
-    Width = 162
+    Width = 110
     Height = 17
     Anchors = [akTop]
     Caption = 'Instalar registro'
@@ -240,7 +240,7 @@ object WindowMain: TWindowMain
   object CheckInstGuard: TCheckBox
     Left = 179
     Top = 202
-    Width = 170
+    Width = 118
     Height = 17
     Anchors = [akTop]
     Caption = 'Instalar Guardian'
@@ -266,11 +266,9 @@ object WindowMain: TWindowMain
     Font.Name = 'Tahoma'
     Font.Style = []
     Items.Strings = (
-      'C:/NETSide')
+      'C:\NETSide\')
     ParentFont = False
     TabOrder = 6
-    ExplicitWidth = 295
-    ExplicitHeight = 187
   end
   object Actions: TActionList
     Images = Images
@@ -301,6 +299,7 @@ object WindowMain: TWindowMain
     object ActEsc: TAction
       Caption = 'ActEsc'
       ShortCut = 27
+      OnExecute = ActEscExecute
     end
   end
   object Images: TImageList
@@ -309,7 +308,7 @@ object WindowMain: TWindowMain
     Left = 24
     Top = 400
     Bitmap = {
-      494C010105000800640210001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050008006C0210001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       00D1000000DA000000BB000000BB000000BB000000BB000000BB000000BB0000
