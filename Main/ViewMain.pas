@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
-  Sets, Bean, Controller;
+  MySets, Bean, Installation;
 
 type
   TWindowMain = class(TForm)
@@ -24,9 +24,6 @@ type
     TxtServiceName: TEdit;
     LblPort: TLabel;
     TxtPort: TEdit;
-    LblOptions: TLabel;
-    CheckInstReg: TCheckBox;
-    CheckInstGuard: TCheckBox;
     ListDll: TListBox;
     LblDll: TLabel;
     BtnAdd: TSpeedButton;
@@ -68,12 +65,11 @@ end;
 
 procedure TWindowMain.ActInstallExecute(Sender: TObject);
 var
-  Options: TInstallationOptions;
-  Configs: TInstallationConfigs;
-  Controller: TController;
+  Configs: TInstallConfigs;
+  Installation: TInstallation;
 begin
   try
-    Configs := TInstallationConfigs.Create;
+    Configs := TInstallConfigs.Create;
 
     with Configs do
     begin
@@ -81,17 +77,15 @@ begin
       Path := TxtPath.Text;
       ServiceName := TxtServiceName.Text;
       Port := TxtPort.Text;
-      if CheckInstReg.Checked then Options := Options + [ioInstRegistry];
-      if CheckInstGuard.Checked then Options := Options + [ioInstGuardian];
       DllPaths := ListDll.Items.ToStringArray;
     end;
 
-    Controller := TController.Create(Configs);
+    Installation := TInstallation.Create(Configs);
 
-    Controller.Install;
+    Installation.Install;
   finally
     FreeAndNil(Configs);
-    FreeAndNil(Controller);
+    FreeAndNil(Installation);
   end;
 end;
 

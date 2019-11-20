@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, ShellAPI, Vcl.Forms, Windows,
-  Arrays;
+  MyArrays;
 
 type
 
@@ -31,7 +31,7 @@ type
 
     class procedure ExecCmd(Comand: string; ShowCmd: integer = 1);
 
-    class function ExexDos(CommandLine: string; Work: string = 'C:\'): string;
+    class function ExecDos(CommandLine: string; Work: string = 'C:\'): string;
 
     class function AppPath: string;
   end;
@@ -225,7 +225,7 @@ begin
 end;
 
 //Run a DOS program and retrieve its output dynamically while it is running.
-class function TUtils.ExexDos(CommandLine: string; Work: string = 'C:\'): string;
+class function TUtils.ExecDos(CommandLine: string; Work: string = 'C:\'): string;
 var
   SecAtrrs: TSecurityAttributes;
   StartupInfo: TStartupInfo;

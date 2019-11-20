@@ -4,7 +4,7 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador Firebird'
-  ClientHeight = 505
+  ClientHeight = 440
   ClientWidth = 358
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object WindowMain: TWindowMain
   Position = poMainFormCenter
   DesignSize = (
     358
-    505)
+    440)
   PixelsPerInch = 96
   TextHeight = 13
   object LblVersion: TLabel
@@ -83,22 +83,9 @@ object WindowMain: TWindowMain
     Font.Style = []
     ParentFont = False
   end
-  object LblOptions: TLabel
-    Left = 8
-    Top = 180
-    Width = 42
-    Height = 16
-    Caption = 'Op'#231#245'es'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object LblDll: TLabel
     Left = 8
-    Top = 238
+    Top = 175
     Width = 179
     Height = 16
     Caption = 'Pastas para copiar a fbclient.dll'
@@ -111,7 +98,7 @@ object WindowMain: TWindowMain
   end
   object BtnAdd: TSpeedButton
     Left = 321
-    Top = 260
+    Top = 197
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -119,11 +106,10 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
-    ExplicitLeft = 318
   end
   object BtnRemove: TSpeedButton
     Left = 321
-    Top = 290
+    Top = 227
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -131,24 +117,24 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
-    ExplicitLeft = 318
   end
   object BtnInstall: TSpeedButton
-    Left = 8
-    Top = 457
+    Left = 10
+    Top = 392
     Width = 78
     Height = 40
     Action = ActInstall
     Anchors = [akLeft, akBottom]
-    ExplicitTop = 453
+    ExplicitTop = 459
   end
   object BtnUninstall: TSpeedButton
-    Left = 270
-    Top = 457
+    Left = 272
+    Top = 392
     Width = 78
     Height = 40
     Action = ActUninstall
     Anchors = [akRight, akBottom]
+    ExplicitTop = 459
   end
   object BoxVersion: TComboBox
     Left = 8
@@ -220,45 +206,11 @@ object WindowMain: TWindowMain
     TabOrder = 3
     Text = '3030'
   end
-  object CheckInstReg: TCheckBox
-    Left = 8
-    Top = 202
-    Width = 110
-    Height = 17
-    Anchors = [akTop]
-    Caption = 'Instalar registro'
-    Checked = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    State = cbChecked
-    TabOrder = 4
-  end
-  object CheckInstGuard: TCheckBox
-    Left = 179
-    Top = 202
-    Width = 118
-    Height = 17
-    Anchors = [akTop]
-    Caption = 'Instalar Guardian'
-    Checked = True
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    State = cbChecked
-    TabOrder = 5
-  end
   object ListDll: TListBox
     Left = 8
-    Top = 260
+    Top = 197
     Width = 313
-    Height = 191
+    Height = 189
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -268,12 +220,12 @@ object WindowMain: TWindowMain
     Items.Strings = (
       'C:\NETSide\')
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 4
   end
   object Actions: TActionList
     Images = Images
-    Left = 80
-    Top = 400
+    Left = 72
+    Top = 336
     object ActPath: TAction
       ImageIndex = 0
       OnExecute = ActPathExecute
@@ -306,9 +258,9 @@ object WindowMain: TWindowMain
     BlendColor = clWhite
     BkColor = clWhite
     Left = 24
-    Top = 400
+    Top = 336
     Bitmap = {
-      494C0101050008006C0210001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C010105000800740210001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       00D1000000DA000000BB000000BB000000BB000000BB000000BB000000BB0000
@@ -585,7 +537,7 @@ object WindowMain: TWindowMain
     FileTypes = <>
     Options = [fdoPickFolders]
     Left = 56
-    Top = 304
+    Top = 225
   end
   object OpenDllPath: TFileOpenDialog
     FavoriteLinks = <>
@@ -593,6 +545,6 @@ object WindowMain: TWindowMain
     FileTypes = <>
     Options = [fdoPickFolders]
     Left = 56
-    Top = 352
+    Top = 272
   end
 end
