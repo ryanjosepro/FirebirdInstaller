@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
-  MySets, Bean, Installation;
+  IOUtils, StrUtils,
+  MySets, MyUtils, Bean, Installation;
 
 type
   TWindowMain = class(TForm)
@@ -35,12 +36,15 @@ type
     BtnInstall: TSpeedButton;
     BtnUninstall: TSpeedButton;
     OpenDllPath: TFileOpenDialog;
+    ActLoadFolders: TAction;
+    SpeedButton1: TSpeedButton;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
     procedure ActUninstallExecute(Sender: TObject);
     procedure ActInstallExecute(Sender: TObject);
     procedure ActEscExecute(Sender: TObject);
+    procedure ActLoadFoldersExecute(Sender: TObject);
   end;
 
 var
@@ -63,6 +67,19 @@ begin
   ListDll.DeleteSelected;
 end;
 
+procedure TWindowMain.ActLoadFoldersExecute(Sender: TObject);
+var
+  Path: string;
+begin
+  for Path in TDirectory.GetDirectories('C:\') do
+  begin
+    if ContainsText(Path, 'NETSide') then
+    begin
+      ListDll.Items.Add(Path);
+    end;
+  end;
+end;
+
 procedure TWindowMain.ActInstallExecute(Sender: TObject);
 var
   Configs: TInstallConfigs;
@@ -74,13 +91,15 @@ begin
     with Configs do
     begin
       Version := TVersion(BoxVersion.ItemIndex);
-      Path := TxtPath.Text;
+      Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
       ServiceName := TxtServiceName.Text;
-      Port := TxtPort.Text;
+      Port := TUtils.IfEmpty(TxtPort.Text, '3050');
       DllPaths := ListDll.Items.ToStringArray;
     end;
 
     Installation := TInstallation.Create(Configs);
+
+    Configs.Source;
 
     Installation.Install;
   finally
@@ -90,8 +109,29 @@ begin
 end;
 
 procedure TWindowMain.ActUninstallExecute(Sender: TObject);
+var
+  Configs: TInstallConfigs;
+  Installation: TInstallation;
 begin
-  //
+  try
+    Configs := TInstallConfigs.Create;
+
+    with Configs do
+    begin
+      Version := TVersion(BoxVersion.ItemIndex);
+      Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
+      ServiceName := TxtServiceName.Text;
+      Port := TUtils.IfEmpty(TxtPort.Text, '3050');
+      DllPaths := ListDll.Items.ToStringArray;
+    end;
+
+    Installation := TInstallation.Create(Configs);
+
+    Installation.Uninstall;
+  finally
+    FreeAndNil(Configs);
+    FreeAndNil(Installation);
+  end;
 end;
 
 procedure TWindowMain.ActPathExecute(Sender: TObject);

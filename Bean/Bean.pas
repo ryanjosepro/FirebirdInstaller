@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.StrUtils,
+  Zip,
   MySets, MyUtils;
 
 type
@@ -21,6 +22,7 @@ type
     procedure SetDllPaths(const Value: System.TArray<System.string>);
 
     function FolderName: string;
+    function ResourceName: string;
   public
     property Version: TVersion read FVersion write SetVersion;
     property Path: string read FPath write SetPath;
@@ -32,6 +34,7 @@ type
     function PathBin: string;
     function PathConf: string;
     function Source: string;
+    function SourceBin: string;
   end;
 
 implementation
@@ -45,7 +48,14 @@ end;
 
 procedure TInstallConfigs.SetPath(const Value: string);
 begin
-  FPath := Value;
+  if TUtils.GetLastFolder(Value) = FolderName then
+  begin
+    FPath := ExtractFileDir(Value);
+  end
+  else
+  begin
+    FPath := Value;
+  end;
 end;
 
 procedure TInstallConfigs.SetServiceName(const Value: string);
@@ -66,7 +76,14 @@ end;
 //Pasta destino de instalação
 function TInstallConfigs.PathFb: string;
 begin
-  Result := Path + FolderName;
+  if TUtils.GetLastFolder(Path) = FolderName then
+  begin
+    Result := Path;
+  end
+  else
+  begin
+    Result := Path + FolderName;
+  end;
 end;
 
 //Pasta destino dos utilitários
@@ -92,6 +109,16 @@ begin
   Result := TUtils.AppPath + 'Data' + FolderName;
 end;
 
+function TInstallConfigs.SourceBin: string;
+begin
+  case Version of
+  vrFb21, vrFb25:
+    Result := Source + '\Bin';
+  vrFb30:
+    Result := Source;
+  end;
+end;
+
 //Nome da pasta pela versão
 function TInstallConfigs.FolderName: string;
 begin
@@ -102,6 +129,18 @@ begin
     Result := '\Firebird_2_5';
   vrFb30:
     Result := '\Firebird_3_0';
+  end;
+end;
+
+function TInstallConfigs.ResourceName: string;
+begin
+  case Version of
+  vrFb21:
+    Result := 'DataFB21';
+  vrFb25:
+    Result := 'DataFB25';
+  vrFb30:
+    Result := 'DataFB30';
   end;
 end;
 

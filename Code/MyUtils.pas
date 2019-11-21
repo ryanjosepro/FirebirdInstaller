@@ -3,7 +3,8 @@ unit MyUtils;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, ShellAPI, Vcl.Forms, Windows,
+  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils,
+  ShellAPI, Vcl.Forms, Windows, IOUtils,
   MyArrays;
 
 type
@@ -30,10 +31,14 @@ type
     class function Extract(StrList: TStringList; Starts: string; Ends: integer; IncStarts: boolean = false): TStringList; overload;
 
     class procedure ExecCmd(Comand: string; ShowCmd: integer = 1);
-
     class function ExecDos(CommandLine: string; Work: string = 'C:\'): string;
 
+    class procedure DeleteIfExistsDir(Dir: string);
+    class procedure DeleteIfExistsFile(FileName: string);
+    class function GetLastFolder(Dir: String): String;
     class function AppPath: string;
+
+    class function BreakLine: string;
   end;
 
 implementation
@@ -280,9 +285,34 @@ begin
   end;
 end;
 
+class procedure TUtils.DeleteIfExistsDir(Dir: string);
+begin
+  if TDirectory.Exists(Dir) then
+    TDirectory.Delete(Dir, true);
+end;
+
+class procedure TUtils.DeleteIfExistsFile(FileName: string);
+begin
+  if FileExists(FileName) then
+    TFile.Delete(FileName);
+end;
+
+class function TUtils.GetLastFolder(Dir: String): String;
+var
+  sa: TStringDynArray;
+begin
+  sa := SplitString(Dir, PathDelim);
+  Result := sa[High(sa)];
+end;
+
 class function TUtils.AppPath: string;
 begin
   Result := ExtractFilePath(Application.ExeName);
+end;
+
+class function TUtils.BreakLine: string;
+begin
+  Result := #13#10;
 end;
 
 end.
