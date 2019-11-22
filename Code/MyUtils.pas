@@ -39,6 +39,8 @@ type
     class function AppPath: string;
 
     class function BreakLine: string;
+
+    class function Temp: string;
   end;
 
 implementation
@@ -285,6 +287,7 @@ begin
   end;
 end;
 
+//Métodos para gerenciar arquivos e diretórios
 class procedure TUtils.DeleteIfExistsDir(Dir: string);
 begin
   if TDirectory.Exists(Dir) then
@@ -310,9 +313,15 @@ begin
   Result := ExtractFilePath(Application.ExeName);
 end;
 
+//Retorna uma quebra de linha
 class function TUtils.BreakLine: string;
 begin
   Result := #13#10;
+end;
+
+class function TUtils.Temp: string;
+begin
+  Result := GetEnvironmentVariable('TEMP');
 end;
 
 end.

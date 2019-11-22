@@ -13,6 +13,8 @@ type
     Configs: TInstallConfigs;
   public
     constructor Create(Configs: TInstallConfigs);
+    procedure CopyDll;
+    procedure DeleteDll;
     procedure Install;
     procedure Uninstall;
   end;
@@ -26,12 +28,32 @@ begin
   self.Configs := Configs;
 end;
 
+procedure TInstallation.CopyDll;
+var
+  DllFolder: string;
+begin
+  for DllFolder in Configs.DllPaths do
+  begin
+    TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
+    TFile.Copy(Configs.SourceDll, DllFolder + '\fbclient.dll');
+  end;
+end;
+
+procedure TInstallation.DeleteDll;
+var
+  DllFolder: string;
+begin
+  for DllFolder in Configs.DllPaths do
+  begin
+    TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
+  end;
+end;
+
 procedure TInstallation.Install;
 var
   Cancel: boolean;
   Arq: TextFile;
   CdBin: string;
-  DllFolder: string;
 begin
   if TDirectory.Exists(Configs.Path) then
   begin
@@ -77,11 +99,7 @@ begin
     TUtils.ExecDos(CdBin + ' && instsvc i -a -g -n ' + Configs.ServiceName);
     TUtils.ExecDos(CdBin + ' && instsvc start -n ' + Configs.ServiceName);
 
-    for DllFolder in Configs.DllPaths do
-    begin
-      TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
-      TFile.Copy(Configs.SourceBin + '\fbclient.dll', DllFolder + '\fbclient.dll');
-    end;
+    CopyDll;
 
     ShowMessage('Instalação Concluída!');
   end;
@@ -90,7 +108,6 @@ end;
 procedure TInstallation.Uninstall;
 var
   CdBin: string;
-  DllFolder: string;
 begin
   if DirectoryExists(Configs.PathFb) then
   begin
@@ -118,11 +135,7 @@ begin
     end
     else
     begin
-
-      for DllFolder in Configs.DllPaths do
-      begin
-        TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
-      end;
+      DeleteDll;
 
       ShowMessage('Desinstalação Concluída');
     end;

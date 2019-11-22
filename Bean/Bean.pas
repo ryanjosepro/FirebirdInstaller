@@ -22,6 +22,7 @@ type
     procedure SetDllPaths(const Value: System.TArray<System.string>);
 
     function FolderName: string;
+    function DllName: string;
     function ResourceName: string;
   public
     property Version: TVersion read FVersion write SetVersion;
@@ -33,8 +34,9 @@ type
     function PathFb: string;
     function PathBin: string;
     function PathConf: string;
-    function Source: string;
+    function Source(Extract: boolean = true): string;
     function SourceBin: string;
+    function SourceDll: string;
   end;
 
 implementation
@@ -104,19 +106,37 @@ begin
 end;
 
 //Pasta fonte do firebird
-function TInstallConfigs.Source: string;
+function TInstallConfigs.Source(Extract: boolean): string;
 begin
-  Result := TUtils.AppPath + 'Data' + FolderName;
+  if Extract then
+  begin
+    TUtils.DeleteIfExistsDir(TUtils.Temp + FolderName);
+
+    TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
+  end;
+  Result := TUtils.Temp + FolderName;
+
+  //Result := TUtils.AppPath + 'Data' + FolderName;
 end;
 
+//Pasta fonte dos utilitarios
 function TInstallConfigs.SourceBin: string;
 begin
   case Version of
   vrFb21, vrFb25:
-    Result := Source + '\Bin';
+    Result := Source(false) + '\Bin';
   vrFb30:
-    Result := Source;
+    Result := Source(false);
   end;
+end;
+
+function TInstallConfigs.SourceDll: string;
+begin
+  TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
+
+  TZipFile.ExtractZipFile(TUtils.AppPath + 'Data\Dlls.zip', TUtils.Temp);
+
+  Result := TUtils.Temp + '\Dlls' + DllName;
 end;
 
 //Nome da pasta pela versão
@@ -132,6 +152,19 @@ begin
   end;
 end;
 
+function TInstallConfigs.DllName: string;
+begin
+  case Version of
+  vrFb21:
+    Result := '\fbclient21.dll';
+  vrFb25:
+    Result := '\fbclient25.dll';
+  vrFb30:
+    Result := '\fbclient30.dll';
+  end;
+end;
+
+//Coming Soon
 function TInstallConfigs.ResourceName: string;
 begin
   case Version of

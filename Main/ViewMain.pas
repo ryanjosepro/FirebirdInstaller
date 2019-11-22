@@ -37,7 +37,11 @@ type
     BtnUninstall: TSpeedButton;
     OpenDllPath: TFileOpenDialog;
     ActLoadFolders: TAction;
+    BtnLoadFolders: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    ActCopyDll: TAction;
     SpeedButton1: TSpeedButton;
+    DeleteDll: TAction;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -45,6 +49,8 @@ type
     procedure ActInstallExecute(Sender: TObject);
     procedure ActEscExecute(Sender: TObject);
     procedure ActLoadFoldersExecute(Sender: TObject);
+    procedure ActCopyDllExecute(Sender: TObject);
+    procedure DeleteDllExecute(Sender: TObject);
   end;
 
 var
@@ -77,6 +83,54 @@ begin
     begin
       ListDll.Items.Add(Path);
     end;
+  end;
+end;
+
+procedure TWindowMain.ActCopyDllExecute(Sender: TObject);
+var
+  Configs: TInstallConfigs;
+  Installation: TInstallation;
+begin
+  try
+    Configs := TInstallConfigs.Create;
+
+    with Configs do
+    begin
+      Version := TVersion(BoxVersion.ItemIndex);
+
+      DllPaths := ListDll.Items.ToStringArray;
+    end;
+
+    Installation := TInstallation.Create(Configs);
+
+    Installation.CopyDll;
+  finally
+    FreeAndNil(Configs);
+    FreeAndNil(Installation);
+  end;
+end;
+
+procedure TWindowMain.DeleteDllExecute(Sender: TObject);
+var
+  Configs: TInstallConfigs;
+  Installation: TInstallation;
+begin
+  try
+    Configs := TInstallConfigs.Create;
+
+    with Configs do
+    begin
+      Version := TVersion(BoxVersion.ItemIndex);
+
+      DllPaths := ListDll.Items.ToStringArray;
+    end;
+
+    Installation := TInstallation.Create(Configs);
+
+    Installation.DeleteDll;
+  finally
+    FreeAndNil(Configs);
+    FreeAndNil(Installation);
   end;
 end;
 
