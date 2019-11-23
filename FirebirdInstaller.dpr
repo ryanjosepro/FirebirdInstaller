@@ -26,7 +26,7 @@ uses
   MySets in 'Code\MySets.pas',
   MyUtils in 'Code\MyUtils.pas',
   MyArrays in 'Code\MyArrays.pas',
-  Bean in 'Bean\Bean.pas',
+  InstallConfigs in 'Bean\InstallConfigs.pas',
   MyDialogs in 'Code\MyDialogs.pas',
   Installation in 'Main\Installation.pas';
 

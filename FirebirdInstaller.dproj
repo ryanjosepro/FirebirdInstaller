@@ -111,7 +111,7 @@
         <DCCReference Include="Code\MySets.pas"/>
         <DCCReference Include="Code\MyUtils.pas"/>
         <DCCReference Include="Code\MyArrays.pas"/>
-        <DCCReference Include="Bean\Bean.pas"/>
+        <DCCReference Include="Bean\InstallConfigs.pas"/>
         <DCCReference Include="Code\MyDialogs.pas"/>
         <DCCReference Include="Main\Installation.pas"/>
         <BuildConfiguration Include="Release">

@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.StrUtils, Vcl.Dialogs, Vcl.Controls, IniFiles,
   IOUtils, ShellApi, Windows,
-  MySets, MyUtils, MyDialogs, Bean;
+  MySets, MyUtils, MyDialogs, InstallConfigs;
 
 type
   TInstallation = class
