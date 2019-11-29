@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MySets, MyUtils, Bean, Installation;
+  MySets, MyUtils, InstallConfigs, Installation;
 
 type
   TWindowMain = class(TForm)
@@ -51,6 +51,7 @@ type
     procedure ActLoadFoldersExecute(Sender: TObject);
     procedure ActCopyDllExecute(Sender: TObject);
     procedure DeleteDllExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   end;
 
 var
@@ -132,6 +133,11 @@ begin
     FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
+end;
+
+procedure TWindowMain.FormActivate(Sender: TObject);
+begin
+  TUtils.DeleteFirewallPort('Firebird', '3050');
 end;
 
 procedure TWindowMain.ActInstallExecute(Sender: TObject);

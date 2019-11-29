@@ -3,7 +3,8 @@ unit MyUtils;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, ShellAPI, Vcl.Forms, Windows,
+  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils,
+  ShellAPI, Vcl.Forms, Windows, IOUtils,
   MyArrays;
 
 type
@@ -38,6 +39,10 @@ type
     class function AppPath: string;
 
     class function BreakLine: string;
+
+    class function Temp: string;
+
+    class procedure AddFirewallPort(Port: integer);
   end;
 
 implementation
@@ -284,15 +289,17 @@ begin
   end;
 end;
 
+//Métodos para gerenciar arquivos e diretórios
 class procedure TUtils.DeleteIfExistsDir(Dir: string);
 begin
-  if TDi then
-
+  if TDirectory.Exists(Dir) then
+    TDirectory.Delete(Dir, true);
 end;
 
 class procedure TUtils.DeleteIfExistsFile(FileName: string);
 begin
-
+  if FileExists(FileName) then
+    TFile.Delete(FileName);
 end;
 
 class function TUtils.GetLastFolder(Dir: String): String;
@@ -308,9 +315,21 @@ begin
   Result := ExtractFilePath(Application.ExeName);
 end;
 
+//Retorna uma quebra de linha
 class function TUtils.BreakLine: string;
 begin
   Result := #13#10;
+end;
+
+//Retorna o diretório temp
+class function TUtils.Temp: string;
+begin
+  Result := GetEnvironmentVariable('TEMP');
+end;
+
+class procedure TUtils.AddFirewallPort(Port: integer);
+begin
+
 end;
 
 end.

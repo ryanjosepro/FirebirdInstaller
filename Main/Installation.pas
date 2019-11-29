@@ -101,6 +101,8 @@ begin
 
     CopyDll;
 
+    TUtils.AddFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
+
     ShowMessage('Instalação Concluída!');
   end;
 end;
@@ -136,6 +138,8 @@ begin
     else
     begin
       DeleteDll;
+
+      TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
 
       ShowMessage('Desinstalação Concluída');
     end;

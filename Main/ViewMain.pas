@@ -51,6 +51,7 @@ type
     procedure ActLoadFoldersExecute(Sender: TObject);
     procedure ActCopyDllExecute(Sender: TObject);
     procedure DeleteDllExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   end;
 
 var
@@ -59,6 +60,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TWindowMain.FormActivate(Sender: TObject);
+begin
+  ActLoadFolders.Execute;
+end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
 begin
@@ -142,6 +148,8 @@ begin
   try
     Configs := TInstallConfigs.Create;
 
+    screen.Cursor := crHourGlass;
+
     with Configs do
     begin
       Version := TVersion(BoxVersion.ItemIndex);
@@ -157,6 +165,7 @@ begin
 
     Installation.Install;
   finally
+    Screen.Cursor := crDefault;
     FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
@@ -169,6 +178,8 @@ var
 begin
   try
     Configs := TInstallConfigs.Create;
+
+    screen.Cursor := crHourGlass;
 
     with Configs do
     begin
@@ -183,6 +194,7 @@ begin
 
     Installation.Uninstall;
   finally
+    Screen.Cursor := crDefault;
     FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;

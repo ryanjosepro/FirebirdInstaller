@@ -41,6 +41,10 @@ type
     class function BreakLine: string;
 
     class function Temp: string;
+
+    class procedure AddFirewallPort(RuleName, Port: string);
+
+    class procedure DeleteFirewallPort(RuleName, Port: string);
   end;
 
 implementation
@@ -226,12 +230,13 @@ begin
   end;
 end;
 
+//Executa um comando cmd - async
 class procedure TUtils.ExecCmd(Comand: string; ShowCmd: integer = 1);
 begin
   ShellExecute(0, nil, 'cmd.exe', PWideChar(Comand), nil, ShowCmd);
 end;
 
-//Run a DOS program and retrieve its output dynamically while it is running.
+//Executa um comando cmd - sync
 class function TUtils.ExecDos(CommandLine: string; Work: string = 'C:\'): string;
 var
   SecAtrrs: TSecurityAttributes;
@@ -319,9 +324,21 @@ begin
   Result := #13#10;
 end;
 
+//Retorna o diretório temp
 class function TUtils.Temp: string;
 begin
   Result := GetEnvironmentVariable('TEMP');
+end;
+
+class procedure TUtils.AddFirewallPort(RuleName, Port: string);
+begin
+  ExecDos('netsh advfirewall firewall add rule name="' + RuleName + '" dir=in action=allow protocol=TCP localport=' + Port);
+  ExecDos('netsh advfirewall firewall add rule name="' + RuleName + '" dir=out action=allow protocol=TCP localport=' + Port);
+end;
+
+class procedure TUtils.DeleteFirewallPort(RuleName, Port: string);
+begin
+  ExecDos('netsh advfirewall firewall delete rule name="' + RuleName + '" protocol=TCP localport=' + Port);
 end;
 
 end.

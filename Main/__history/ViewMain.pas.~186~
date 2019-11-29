@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MySets, MyUtils, Bean, Installation;
+  MySets, MyUtils, InstallConfigs, Installation;
 
 type
   TWindowMain = class(TForm)

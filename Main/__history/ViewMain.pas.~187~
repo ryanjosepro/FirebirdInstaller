@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MySets, MyUtils, Bean, Installation;
+  MySets, MyUtils, InstallConfigs, Installation;
 
 type
   TWindowMain = class(TForm)
@@ -93,6 +93,7 @@ var
 begin
   try
     Configs := TInstallConfigs.Create;
+
     with Configs do
     begin
       Version := TVersion(BoxVersion.ItemIndex);
@@ -102,7 +103,7 @@ begin
 
     Installation := TInstallation.Create(Configs);
 
-    Installation.CopyDlls;
+    Installation.CopyDll;
   finally
     FreeAndNil(Configs);
     FreeAndNil(Installation);
@@ -117,11 +118,16 @@ begin
   try
     Configs := TInstallConfigs.Create;
 
-    Configs.Version := TVersion(BoxVersion.ItemIndex);
+    with Configs do
+    begin
+      Version := TVersion(BoxVersion.ItemIndex);
+
+      DllPaths := ListDll.Items.ToStringArray;
+    end;
 
     Installation := TInstallation.Create(Configs);
 
-    Installation.DeleteDlls;
+    Installation.DeleteDll;
   finally
     FreeAndNil(Configs);
     FreeAndNil(Installation);
@@ -135,6 +141,8 @@ var
 begin
   try
     Configs := TInstallConfigs.Create;
+
+    screen.Cursor := crHourGlass;
 
     with Configs do
     begin
