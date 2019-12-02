@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.StrUtils, Vcl.Dialogs, Vcl.Controls, IniFiles,
   IOUtils, ShellApi, Windows,
-  MySets, MyUtils, MyDialogs, Bean;
+  MySets, MyUtils, MyDialogs, InstallConfigs;
 
 type
   TInstallation = class
@@ -13,8 +13,8 @@ type
     Configs: TInstallConfigs;
   public
     constructor Create(Configs: TInstallConfigs);
-    procedure CopyDlls;
-    procedure DeleteDlls;
+    procedure CopyDll;
+    procedure DeleteDll;
     procedure Install;
     procedure Uninstall;
   end;
@@ -28,18 +28,18 @@ begin
   self.Configs := Configs;
 end;
 
-procedure TInstallation.CopyDlls;
+procedure TInstallation.CopyDll;
 var
   DllFolder: string;
 begin
   for DllFolder in Configs.DllPaths do
   begin
     TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
-    TFile.Copy(Configs.SourceBin + '\fbclient.dll', DllFolder + '\fbclient.dll');
+    TFile.Copy(Configs.SourceDll, DllFolder + '\fbclient.dll');
   end;
 end;
 
-procedure TInstallation.DeleteDlls;
+procedure TInstallation.DeleteDll;
 var
   DllFolder: string;
 begin
@@ -99,7 +99,9 @@ begin
     TUtils.ExecDos(CdBin + ' && instsvc i -a -g -n ' + Configs.ServiceName);
     TUtils.ExecDos(CdBin + ' && instsvc start -n ' + Configs.ServiceName);
 
-    CopyDlls;
+    CopyDll;
+
+    TUtils.AddFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
 
     ShowMessage('Instalação Concluída!');
   end;
@@ -108,7 +110,6 @@ end;
 procedure TInstallation.Uninstall;
 var
   CdBin: string;
-  DllFolder: string;
 begin
   if DirectoryExists(Configs.PathFb) then
   begin
@@ -136,10 +137,9 @@ begin
     end
     else
     begin
-      for DllFolder in Configs.DllPaths do
-      begin
-        TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
-      end;
+      DeleteDll;
+
+      TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
 
       ShowMessage('Desinstalação Concluída');
     end;

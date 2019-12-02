@@ -52,6 +52,8 @@ type
     procedure ActCopyDllExecute(Sender: TObject);
     procedure DeleteDllExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+  private
+    function GetInstallation: TInstallation;
   end;
 
 var
@@ -94,108 +96,58 @@ end;
 
 procedure TWindowMain.ActCopyDllExecute(Sender: TObject);
 var
-  Configs: TInstallConfigs;
   Installation: TInstallation;
 begin
   try
-    Configs := TInstallConfigs.Create;
-
-    with Configs do
-    begin
-      Version := TVersion(BoxVersion.ItemIndex);
-
-      DllPaths := ListDll.Items.ToStringArray;
-    end;
-
-    Installation := TInstallation.Create(Configs);
+    Installation := GetInstallation;
 
     Installation.CopyDll;
   finally
-    FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
 end;
 
 procedure TWindowMain.DeleteDllExecute(Sender: TObject);
 var
-  Configs: TInstallConfigs;
   Installation: TInstallation;
 begin
   try
-    Configs := TInstallConfigs.Create;
-
-    with Configs do
-    begin
-      Version := TVersion(BoxVersion.ItemIndex);
-
-      DllPaths := ListDll.Items.ToStringArray;
-    end;
-
-    Installation := TInstallation.Create(Configs);
+    Installation := GetInstallation;
 
     Installation.DeleteDll;
   finally
-    FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
 end;
 
 procedure TWindowMain.ActInstallExecute(Sender: TObject);
 var
-  Configs: TInstallConfigs;
   Installation: TInstallation;
 begin
   try
-    Configs := TInstallConfigs.Create;
+    Screen.Cursor := crHourGlass;
 
-    screen.Cursor := crHourGlass;
-
-    with Configs do
-    begin
-      Version := TVersion(BoxVersion.ItemIndex);
-      Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
-      ServiceName := TxtServiceName.Text;
-      Port := TUtils.IfEmpty(TxtPort.Text, '3050');
-      DllPaths := ListDll.Items.ToStringArray;
-    end;
-
-    Installation := TInstallation.Create(Configs);
-
-    Configs.Source;
+    Installation := GetInstallation;
 
     Installation.Install;
   finally
     Screen.Cursor := crDefault;
-    FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
 end;
 
 procedure TWindowMain.ActUninstallExecute(Sender: TObject);
 var
-  Configs: TInstallConfigs;
   Installation: TInstallation;
 begin
   try
-    Configs := TInstallConfigs.Create;
-
     screen.Cursor := crHourGlass;
 
-    with Configs do
-    begin
-      Version := TVersion(BoxVersion.ItemIndex);
-      Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
-      ServiceName := TxtServiceName.Text;
-      Port := TUtils.IfEmpty(TxtPort.Text, '3050');
-      DllPaths := ListDll.Items.ToStringArray;
-    end;
-
-    Installation := TInstallation.Create(Configs);
+    Installation := GetInstallation;
 
     Installation.Uninstall;
   finally
     Screen.Cursor := crDefault;
-    FreeAndNil(Configs);
     FreeAndNil(Installation);
   end;
 end;
@@ -211,6 +163,24 @@ end;
 procedure TWindowMain.ActEscExecute(Sender: TObject);
 begin
   Close;
+end;
+
+function TWindowMain.GetInstallation: TInstallation;
+var
+  Configs: TInstallConfigs;
+begin
+  Configs := TInstallConfigs.Create;
+
+  with Configs do
+  begin
+    Version := TVersion(BoxVersion.ItemIndex);
+    Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
+    ServiceName := TxtServiceName.Text;
+    Port := TUtils.IfEmpty(TxtPort.Text, '3050');
+    DllPaths := ListDll.Items.ToStringArray;
+  end;
+
+  Result := TInstallation.Create(Configs);
 end;
 
 end.

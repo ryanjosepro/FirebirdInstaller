@@ -51,6 +51,9 @@ type
     procedure ActLoadFoldersExecute(Sender: TObject);
     procedure ActCopyDllExecute(Sender: TObject);
     procedure DeleteDllExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    function GetInstallation: TInstallation;
   end;
 
 var
@@ -59,6 +62,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TWindowMain.FormActivate(Sender: TObject);
+begin
+  ActLoadFolders.Execute;
+end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
 begin
@@ -205,6 +213,27 @@ end;
 procedure TWindowMain.ActEscExecute(Sender: TObject);
 begin
   Close;
+end;
+
+function TWindowMain.GetInstallation: TInstallation;
+var
+  Configs: TInstallConfigs;
+  Installation: TInstallation;
+begin
+  Configs := TInstallConfigs.Create;
+
+  with Configs do
+  begin
+    Version := TVersion(BoxVersion.ItemIndex);
+    Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
+    ServiceName := TxtServiceName.Text;
+    Port := TUtils.IfEmpty(TxtPort.Text, '3050');
+    DllPaths := ListDll.Items.ToStringArray;
+  end;
+
+  Installation := TInstallation.Create(Configs);
+
+  Result := Installation;
 end;
 
 end.
