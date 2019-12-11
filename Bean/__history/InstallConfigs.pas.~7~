@@ -34,7 +34,7 @@ type
     function PathBin: string;
     function PathConf: string;
     function Source(Extract: boolean = true): string;
-    function SourceBin(Extract: boolean = false): string;
+    function SourceBin: string;
     function SourceDll: string;
   end;
 
@@ -96,13 +96,13 @@ begin
   Result := TUtils.Temp + FolderName;
 end;
 
-function TInstallConfigs.SourceBin(Extract: boolean = false): string;
+function TInstallConfigs.SourceBin: string;
 begin
   case Version of
   vrFb21, vrFb25:
-    Result := Source(Extract) + '\Bin';
+    Result := Source(false) + '\Bin';
   vrFb30:
-    Result := Source(Extract);
+    Result := Source(false);
   end;
 end;
 

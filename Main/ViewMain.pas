@@ -52,6 +52,7 @@ type
     procedure ActCopyDllExecute(Sender: TObject);
     procedure DeleteDllExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure BoxVersionChange(Sender: TObject);
   private
     function GetInstallation: TInstallation;
   end;
@@ -66,6 +67,7 @@ implementation
 procedure TWindowMain.FormActivate(Sender: TObject);
 begin
   ActLoadFolders.Execute;
+  BoxVersionChange(BoxVersion);
 end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
@@ -77,8 +79,19 @@ begin
 end;
 
 procedure TWindowMain.ActRemoveExecute(Sender: TObject);
+var
+  Index: integer;
 begin
+  Index := ListDll.ItemIndex;
   ListDll.DeleteSelected;
+  if Index = 0 then
+  begin
+    ListDll.ItemIndex := 0;
+  end
+  else
+  begin
+    ListDll.ItemIndex := Index - 1;
+  end;
 end;
 
 procedure TWindowMain.ActLoadFoldersExecute(Sender: TObject);
@@ -102,6 +115,8 @@ begin
     Installation := GetInstallation;
 
     Installation.CopyDll;
+
+    ShowMessage('Dlls Copiadas!');
   finally
     FreeAndNil(Installation);
   end;
@@ -115,6 +130,8 @@ begin
     Installation := GetInstallation;
 
     Installation.DeleteDll;
+
+    ShowMessage('Dlls Deletadas!');
   finally
     FreeAndNil(Installation);
   end;
@@ -181,6 +198,30 @@ begin
   end;
 
   Result := TInstallation.Create(Configs);
+end;
+
+procedure TWindowMain.BoxVersionChange(Sender: TObject);
+begin
+  case TVersion(BoxVersion.ItemIndex) of
+  vrFb21:
+  begin
+    TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_2_1';
+    TxtServiceName.Text := 'NETSide2.1';
+    TxtPort.Text := '3050';
+  end;
+  vrFb25:
+  begin
+    TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_2_5';
+    TxtServiceName.Text := 'NETSide2.5';
+    TxtPort.Text := '3060';
+  end;
+  vrFb30:
+  begin
+    TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_3_0';
+    TxtServiceName.Text := 'NETSide3.0';
+    TxtPort.Text := '3070';
+  end;
+  end;
 end;
 
 end.

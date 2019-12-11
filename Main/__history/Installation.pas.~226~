@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, System.StrUtils, Vcl.Dialogs, Vcl.Controls, IniFiles,
   IOUtils, ShellApi, Windows,
-  MySets, MyUtils, MyDialogs, Bean;
+  MySets, MyUtils, MyDialogs, InstallConfigs;
 
 type
   TInstallation = class
@@ -35,7 +35,7 @@ begin
   for DllFolder in Configs.DllPaths do
   begin
     TUtils.DeleteIfExistsFile(DllFolder + '\fbclient.dll');
-    TFile.Copy(Configs.SourceBin + '\fbclient.dll', DllFolder + '\fbclient.dll');
+    TFile.Copy(Configs.SourceDll, DllFolder + '\fbclient.dll');
   end;
 end;
 
@@ -52,18 +52,14 @@ end;
 procedure TInstallation.Install;
 var
   Cancel: boolean;
-  Arq: TextFile;
+  Arq: TStringList;
   CdBin: string;
 begin
   if TDirectory.Exists(Configs.Path) then
   begin
-    if TDirectory.Exists(Configs.PathFb) then
+    if TDialogs.YesNo('A pasta de instalação "' + Configs.Path + '" já existe, deseja sobreescrevê-la?') = mrYes then
     begin
-      if TDialogs.YesNo(
-      'A pasta de instalação "' + Configs.PathFb + '" já existe, deseja sobreescrevê-la?') = mrYes then
-      begin
-        TDirectory.Delete(Configs.PathFb, true);
-      end;
+      TDirectory.Delete(Configs.Path, true);
     end;
   end
   else
@@ -71,7 +67,7 @@ begin
     TDirectory.CreateDirectory(Configs.Path);
   end;
 
-  if TDirectory.Exists(Configs.PathFb) then
+  if TDirectory.Exists(Configs.Path) then
   begin
     ShowMessage('Erro na pasta de intalação, verifique se a '+
     'versão do Firebird que você está tentando instalar já '+
@@ -79,19 +75,15 @@ begin
   end
   else
   begin
-    TDirectory.Copy(Configs.Source, Configs.PathFb);
+    TDirectory.Copy(Configs.Source, Configs.Path);
 
-    TUtils.DeleteIfExistsFile(Configs.PathConf);
+    Arq := TStringList.Create;
 
-    AssignFile(Arq, Configs.PathConf);
+    Arq.LoadFromFile(Configs.PathConf);
 
-    Rewrite(Arq);
+    Arq.Insert(0, 'RemoteServicePort = ' + Configs.Port);
 
-    try
-      Writeln(Arq, 'RemoteServicePort = ' + Configs.Port);
-    finally
-      CloseFile(Arq);
-    end;
+    Arq.SaveToFile(Configs.PathConf);
 
     CdBin := 'cd ' + Configs.PathBin;
 
@@ -99,7 +91,9 @@ begin
     TUtils.ExecDos(CdBin + ' && instsvc i -a -g -n ' + Configs.ServiceName);
     TUtils.ExecDos(CdBin + ' && instsvc start -n ' + Configs.ServiceName);
 
-    CopyDlls;
+    CopyDll;
+
+    TUtils.AddFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
 
     ShowMessage('Instalação Concluída!');
   end;
@@ -109,7 +103,7 @@ procedure TInstallation.Uninstall;
 var
   CdBin: string;
 begin
-  if DirectoryExists(Configs.PathFb) then
+  if DirectoryExists(Configs.Path) then
   begin
     if DirectoryExists(Configs.PathBin) then
     begin
@@ -125,9 +119,9 @@ begin
       TUtils.ExecDos(CdBin + ' && instreg r');
     end;
 
-    TDirectory.Delete(Configs.PathFb, true);
+    TDirectory.Delete(Configs.Path, true);
 
-    if DirectoryExists(Configs.PathFb) then
+    if DirectoryExists(Configs.Path) then
     begin
       ShowMessage('Erro ao desinstalar, verifique se o '+
       'nome do serviço é o referente ao da pasta de '+
@@ -135,7 +129,9 @@ begin
     end
     else
     begin
-      DeleteDlls;
+      DeleteDll;
+
+      TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
 
       ShowMessage('Desinstalação Concluída');
     end;

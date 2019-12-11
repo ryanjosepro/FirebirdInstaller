@@ -31,10 +31,11 @@ type
     property Port: string read FPort write SetPort;
     property DllPaths: System.TArray<System.string> read FDllPaths write SetDllPaths;
 
+    function PathFb: string;
     function PathBin: string;
     function PathConf: string;
     function Source(Extract: boolean = true): string;
-    function SourceBin(Extract: boolean = false): string;
+    function SourceBin: string;
     function SourceDll: string;
   end;
 
@@ -72,15 +73,15 @@ function TInstallConfigs.PathBin: string;
 begin
   case Version of
   vrFb21, vrFb25:
-    Result := Path + '\Bin';
+    Result := PathFb + '\Bin';
   vrFb30:
-    Result := Path;
+    Result := PathFb;
   end;
 end;
 
 function TInstallConfigs.PathConf: string;
 begin
-  Result := Path + '\firebird.conf';
+  Result := PathFb + '\firebird.conf';
 end;
 
 //Fontes
@@ -92,17 +93,18 @@ begin
 
     TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
   end;
-
   Result := TUtils.Temp + FolderName;
+
+  //Result := TUtils.AppPath + 'Data' + FolderName;
 end;
 
-function TInstallConfigs.SourceBin(Extract: boolean = false): string;
+function TInstallConfigs.SourceBin: string;
 begin
   case Version of
   vrFb21, vrFb25:
-    Result := Source(Extract) + '\Bin';
+    Result := Source(false) + '\Bin';
   vrFb30:
-    Result := Source(Extract);
+    Result := Source(false);
   end;
 end;
 

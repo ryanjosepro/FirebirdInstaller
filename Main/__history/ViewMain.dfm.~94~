@@ -3972,7 +3972,7 @@ object WindowMain: TWindowMain
     NumbersOnly = True
     ParentFont = False
     TabOrder = 3
-    Text = '3050'
+    Text = '3030'
   end
   object Actions: TActionList
     Images = Images

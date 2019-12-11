@@ -52,46 +52,34 @@ end;
 procedure TInstallation.Install;
 var
   Cancel: boolean;
-  Arq: TextFile;
+  Arq: TStringList;
   CdBin: string;
 begin
   if TDirectory.Exists(Configs.Path) then
   begin
-    if TDirectory.Exists(Configs.PathFb) then
+    if TDialogs.YesNo('A pasta de instalação "' + Configs.Path + '" já existe, deseja sobreescrevê-la?') = mrYes then
     begin
-      if TDialogs.YesNo(
-      'A pasta de instalação "' + Configs.PathFb + '" já existe, deseja sobreescrevê-la?') = mrYes then
-      begin
-        TDirectory.Delete(Configs.PathFb, true);
-      end;
+      TDirectory.Delete(Configs.Path, true);
     end;
-  end
-  else
-  begin
-    TDirectory.CreateDirectory(Configs.Path);
   end;
 
-  if TDirectory.Exists(Configs.PathFb) then
+  if TDirectory.Exists(Configs.Path) then
   begin
-    ShowMessage('Erro na pasta de intalação, verifique se a '+
+    ShowMessage('Erro na pasta de instalação, verifique se a '+
     'versão do Firebird que você está tentando instalar já '+
     'está instalada, ou se a pasta de instalação está em uso!');
   end
   else
   begin
-    TDirectory.Copy(Configs.Source, Configs.PathFb);
+    TDirectory.Copy(Configs.Source, Configs.Path);
 
-    TUtils.DeleteIfExistsFile(Configs.PathConf);
+    Arq := TStringList.Create;
 
-    AssignFile(Arq, Configs.PathConf);
+    Arq.LoadFromFile(Configs.PathConf);
 
-    Rewrite(Arq);
+    Arq.Insert(0, 'RemoteServicePort = ' + Configs.Port);
 
-    try
-      Writeln(Arq, 'RemoteServicePort = ' + Configs.Port);
-    finally
-      CloseFile(Arq);
-    end;
+    Arq.SaveToFile(Configs.PathConf);
 
     CdBin := 'cd ' + Configs.PathBin;
 
@@ -111,12 +99,12 @@ procedure TInstallation.Uninstall;
 var
   CdBin: string;
 begin
-  if DirectoryExists(Configs.PathFb) then
+  if DirectoryExists(Configs.Path) then
   begin
     if DirectoryExists(Configs.PathBin) then
     begin
       if not FileExists(Configs.PathBin + '\instsvc.exe') then
-        TFile.Copy(Configs.SourceBin + '\instsvc.exe', Configs.PathBin + '\instsvc.exe');
+        TFile.Copy(Configs.SourceBin(true) + '\instsvc.exe', Configs.PathBin + '\instsvc.exe');
       if not FileExists(Configs.PathBin + '\instreg.exe') then
         TFile.Copy(Configs.SourceBin + '\instreg.exe', Configs.PathBin + '\instreg.exe');
 
@@ -127,9 +115,9 @@ begin
       TUtils.ExecDos(CdBin + ' && instreg r');
     end;
 
-    TDirectory.Delete(Configs.PathFb, true);
+    TDirectory.Delete(Configs.Path, true);
 
-    if DirectoryExists(Configs.PathFb) then
+    if DirectoryExists(Configs.Path) then
     begin
       ShowMessage('Erro ao desinstalar, verifique se o '+
       'nome do serviço é o referente ao da pasta de '+
@@ -146,8 +134,7 @@ begin
   end
   else
   begin
-    ShowMessage('Erro ao desinstalar, esta versão não está '+
-    'instalada nesta pasta!');
+    ShowMessage('Erro ao desinstalar, diretório inexistente!');
   end;
 end;
 

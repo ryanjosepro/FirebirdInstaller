@@ -3939,7 +3939,7 @@ object WindowMain: TWindowMain
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    Text = 'C:\Program Files (x86)\Firebird\Firebird_2_1'
+    Text = 'C:\Program Files (x86)\Firebird'
   end
   object TxtServiceName: TEdit
     Left = 8
@@ -3955,7 +3955,7 @@ object WindowMain: TWindowMain
     Font.Style = []
     ParentFont = False
     TabOrder = 2
-    Text = 'NETSide2.1'
+    Text = 'NETSide'
   end
   object TxtPort: TEdit
     Left = 286
@@ -3972,7 +3972,7 @@ object WindowMain: TWindowMain
     NumbersOnly = True
     ParentFont = False
     TabOrder = 3
-    Text = '3050'
+    Text = '3030'
   end
   object Actions: TActionList
     Images = Images
