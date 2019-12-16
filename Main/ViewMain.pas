@@ -115,7 +115,10 @@ begin
     Installation := GetInstallation;
 
     Installation.CopyDll;
+    if True then
+    begin
 
+    end;
     ShowMessage('Dlls Copiadas!');
   finally
     FreeAndNil(Installation);
