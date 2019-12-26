@@ -66,7 +66,6 @@ implementation
 
 procedure TWindowMain.FormActivate(Sender: TObject);
 begin
-  ActLoadFolders.Execute;
   BoxVersionChange(BoxVersion);
 end;
 
