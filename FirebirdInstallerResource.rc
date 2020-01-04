@@ -1,0 +1,4 @@
+DataDlls RCDATA "Data\\Dlls.zip"
+DataFB21 RCDATA "Data\\Firebird_2_1.zip"
+DataFB25 RCDATA "Data\\Firebird_2_5.zip"
+DataFB30 RCDATA "Data\\Firebird_3_0.zip"

@@ -3,7 +3,7 @@ unit MyUtils;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils,
+  System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, System.Zip,
   ShellAPI, Vcl.Forms, Windows, IOUtils,
   MyArrays;
 
@@ -45,6 +45,8 @@ type
     class procedure AddFirewallPort(RuleName, Port: string);
 
     class procedure DeleteFirewallPort(RuleName, Port: string);
+
+    class procedure ExtractResourceZip(ResourceName, Path: string);
   end;
 
 implementation
@@ -339,6 +341,24 @@ end;
 class procedure TUtils.DeleteFirewallPort(RuleName, Port: string);
 begin
   ExecDos('netsh advfirewall firewall delete rule name="' + RuleName + '" protocol=TCP localport=' + Port);
+end;
+
+class procedure TUtils.ExtractResourceZip(ResourceName, Path: string);
+var
+  Stream: TResourceStream;
+  ZipFile: TZipFile;
+begin
+  Stream := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+  ZipFile := TZipFile.Create;
+
+  try
+    ZipFile.Open(Stream, zmRead);
+
+    ZipFile.ExtractAll(Path);
+  finally
+    FreeAndNil(Stream);
+    FreeAndNil(ZipFile);
+  end;
 end;
 
 end.

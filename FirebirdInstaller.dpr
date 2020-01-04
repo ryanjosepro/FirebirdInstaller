@@ -18,6 +18,10 @@ program FirebirdInstaller;
 
 
 
+
+
+{$R *.dres}
+
 uses
   Vcl.Forms,
   ViewMain in 'Main\ViewMain.pas' {WindowMain},

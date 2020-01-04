@@ -84,13 +84,15 @@ begin
 end;
 
 //Fontes
-function TInstallConfigs.Source(Extract: boolean): string;
+function TInstallConfigs.Source(Extract: boolean = true): string;
 begin
   if Extract then
   begin
     TUtils.DeleteIfExistsDir(TUtils.Temp + FolderName);
 
-    TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
+    //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
+
+    TUtils.ExtractResourceZip(ResourceName, TUtils.Temp);
   end;
 
   Result := TUtils.Temp + FolderName;
@@ -110,7 +112,9 @@ function TInstallConfigs.SourceDll: string;
 begin
   TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
 
-  TZipFile.ExtractZipFile(TUtils.AppPath + 'Data\Dlls.zip', TUtils.Temp);
+  //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data\Dlls.zip', TUtils.Temp);
+
+  TUtils.ExtractResourceZip('DataDlls', TUtils.Temp);
 
   Result := TUtils.Temp + '\Dlls' + DllName;
 end;
@@ -140,7 +144,7 @@ begin
   end;
 end;
 
-//Coming Soon
+//Nome do resource pela versão
 function TInstallConfigs.ResourceName: string;
 begin
   case Version of
