@@ -25,7 +25,6 @@ type
     TxtServiceName: TEdit;
     LblPort: TLabel;
     TxtPort: TEdit;
-    ListDll: TListBox;
     LblDll: TLabel;
     BtnAdd: TSpeedButton;
     ActAdd: TAction;
@@ -38,10 +37,12 @@ type
     OpenDllPath: TFileOpenDialog;
     ActLoadFolders: TAction;
     BtnLoadFolders: TSpeedButton;
-    SpeedButton2: TSpeedButton;
+    BtnCopyDll: TSpeedButton;
     ActCopyDll: TAction;
-    SpeedButton1: TSpeedButton;
+    BtnDeleteDll: TSpeedButton;
     DeleteDll: TAction;
+    ListDll: TCheckListBox;
+    CheckAll: TCheckBox;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -53,8 +54,11 @@ type
     procedure DeleteDllExecute(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure BoxVersionChange(Sender: TObject);
+    procedure CheckAllClick(Sender: TObject);
+    procedure ListDllClickCheck(Sender: TObject);
   private
     function GetInstallation: TInstallation;
+    procedure UpdateButtons;
   end;
 
 var
@@ -67,6 +71,8 @@ implementation
 procedure TWindowMain.FormActivate(Sender: TObject);
 begin
   BoxVersionChange(BoxVersion);
+  ActLoadFolders.Execute;
+  UpdateButtons;
 end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
@@ -114,10 +120,7 @@ begin
     Installation := GetInstallation;
 
     Installation.CopyDll;
-    if True then
-    begin
-
-    end;
+    
     ShowMessage('Dlls Copiadas!');
   finally
     FreeAndNil(Installation);
@@ -187,6 +190,7 @@ end;
 function TWindowMain.GetInstallation: TInstallation;
 var
   Configs: TInstallConfigs;
+  I: integer;
 begin
   Configs := TInstallConfigs.Create;
 
@@ -196,7 +200,16 @@ begin
     Path := TUtils.IfEmpty(TxtPath.Text, 'C:\Program Files (x86)\Firebird');
     ServiceName := TxtServiceName.Text;
     Port := TUtils.IfEmpty(TxtPort.Text, '3050');
-    DllPaths := ListDll.Items.ToStringArray;
+    DllPaths := TStringList.Create;
+
+    for I := 0 to ListDll.Count - 1 do
+    begin
+      if ListDll.Checked[I] then
+      begin
+        DllPaths.Add(ListDll.Items[I]);
+      end;
+    end;
+
   end;
 
   Result := TInstallation.Create(Configs);
@@ -224,6 +237,39 @@ begin
     TxtPort.Text := '3070';
   end;
   end;
+end;
+
+procedure TWindowMain.CheckAllClick(Sender: TObject);
+begin
+  if CheckAll.Checked then
+  begin
+    ListDll.CheckAll(cbChecked);
+  end
+  else
+  begin
+    ListDll.CheckAll(cbUnchecked);
+  end;
+  UpdateButtons;
+end;
+
+procedure TWindowMain.ListDllClickCheck(Sender: TObject);
+begin
+  UpdateButtons;
+end;
+
+procedure TWindowMain.UpdateButtons;
+var
+  I: integer;
+  Checked: boolean;
+begin
+  Checked := false;
+  for I := 0 to ListDll.Count - 1 do
+  begin
+    Checked := Checked or ListDll.Checked[I];
+  end;
+
+  BtnCopyDll.Enabled := Checked;
+  BtnDeleteDll.Enabled := Checked;
 end;
 
 end.

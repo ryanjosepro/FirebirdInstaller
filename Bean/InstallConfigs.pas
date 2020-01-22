@@ -14,12 +14,12 @@ type
     FPath: string;
     FServiceName: string;
     FPort: string;
-    FDllPaths: System.TArray<System.string>;
+    FDllPaths: TStringList;
     procedure SetVersion(const Value: TVersion);
     procedure SetPath(const Value: string);
     procedure SetServiceName(const Value: string);
     procedure SetPort(const Value: string);
-    procedure SetDllPaths(const Value: System.TArray<System.string>);
+    procedure SetDllPaths(const Value: TStringList);
 
     function FolderName: string;
     function DllName: string;
@@ -29,7 +29,7 @@ type
     property Path: string read FPath write SetPath;
     property ServiceName: string read FServiceName write SetServiceName;
     property Port: string read FPort write SetPort;
-    property DllPaths: System.TArray<System.string> read FDllPaths write SetDllPaths;
+    property DllPaths: TStringList read FDllPaths write SetDllPaths;
 
     function PathBin: string;
     function PathConf: string;
@@ -62,7 +62,7 @@ begin
   FPort := Value;
 end;
 
-procedure TInstallConfigs.SetDllPaths(const Value: System.TArray<System.string>);
+procedure TInstallConfigs.SetDllPaths(const Value: TStringList);
 begin
   FDllPaths := Value;
 end;

@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Installer'
-  ClientHeight = 440
-  ClientWidth = 358
+  ClientHeight = 509
+  ClientWidth = 430
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3736,8 +3736,8 @@ object WindowMain: TWindowMain
   Position = poMainFormCenter
   OnActivate = FormActivate
   DesignSize = (
-    358
-    440)
+    430
+    509)
   PixelsPerInch = 96
   TextHeight = 13
   object LblVersion: TLabel
@@ -3767,7 +3767,7 @@ object WindowMain: TWindowMain
     ParentFont = False
   end
   object BtnPath: TSpeedButton
-    Left = 321
+    Left = 393
     Top = 85
     Width = 27
     Height = 24
@@ -3776,6 +3776,7 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
+    ExplicitLeft = 321
   end
   object LblServiceName: TLabel
     Left = 8
@@ -3791,7 +3792,7 @@ object WindowMain: TWindowMain
     ParentFont = False
   end
   object LblPort: TLabel
-    Left = 286
+    Left = 358
     Top = 123
     Width = 30
     Height = 16
@@ -3803,10 +3804,11 @@ object WindowMain: TWindowMain
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 286
   end
   object LblDll: TLabel
     Left = 8
-    Top = 175
+    Top = 183
     Width = 179
     Height = 16
     Caption = 'Pastas para copiar a fbclient.dll'
@@ -3818,8 +3820,8 @@ object WindowMain: TWindowMain
     ParentFont = False
   end
   object BtnAdd: TSpeedButton
-    Left = 321
-    Top = 197
+    Left = 209
+    Top = 178
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -3827,10 +3829,11 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
+    ExplicitLeft = 280
   end
   object BtnRemove: TSpeedButton
-    Left = 321
-    Top = 227
+    Left = 242
+    Top = 178
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -3838,26 +3841,28 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
+    ExplicitLeft = 313
   end
   object BtnInstall: TSpeedButton
-    Left = 272
-    Top = 392
-    Width = 78
+    Left = 219
+    Top = 461
+    Width = 201
     Height = 40
     Action = ActInstall
     Anchors = [akLeft, akBottom]
   end
   object BtnUninstall: TSpeedButton
     Left = 8
-    Top = 392
-    Width = 78
+    Top = 461
+    Width = 201
     Height = 40
     Action = ActUninstall
     Anchors = [akRight, akBottom]
+    ExplicitTop = 444
   end
   object BtnLoadFolders: TSpeedButton
-    Left = 321
-    Top = 257
+    Left = 301
+    Top = 178
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -3865,10 +3870,11 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
+    ExplicitLeft = 372
   end
-  object SpeedButton2: TSpeedButton
-    Left = 321
-    Top = 287
+  object BtnCopyDll: TSpeedButton
+    Left = 360
+    Top = 178
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -3876,10 +3882,11 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
+    ExplicitLeft = 431
   end
-  object SpeedButton1: TSpeedButton
-    Left = 321
-    Top = 317
+  object BtnDeleteDll: TSpeedButton
+    Left = 393
+    Top = 178
     Width = 27
     Height = 24
     Cursor = crHandPoint
@@ -3887,26 +3894,12 @@ object WindowMain: TWindowMain
     Anchors = [akTop, akRight]
     ParentShowHint = False
     ShowHint = True
-  end
-  object ListDll: TListBox
-    Left = 8
-    Top = 197
-    Width = 313
-    Height = 189
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    Columns = 1
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 4
+    ExplicitLeft = 464
   end
   object BoxVersion: TComboBox
     Left = 8
     Top = 27
-    Width = 340
+    Width = 412
     Height = 22
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
@@ -3928,7 +3921,7 @@ object WindowMain: TWindowMain
   object TxtPath: TEdit
     Left = 8
     Top = 85
-    Width = 310
+    Width = 382
     Height = 24
     Anchors = [akLeft, akTop, akRight]
     AutoSize = False
@@ -3944,7 +3937,7 @@ object WindowMain: TWindowMain
   object TxtServiceName: TEdit
     Left = 8
     Top = 145
-    Width = 272
+    Width = 344
     Height = 24
     Anchors = [akLeft, akTop, akRight]
     AutoSize = False
@@ -3958,7 +3951,7 @@ object WindowMain: TWindowMain
     Text = 'NETSide2.1'
   end
   object TxtPort: TEdit
-    Left = 286
+    Left = 358
     Top = 145
     Width = 62
     Height = 24
@@ -3973,6 +3966,31 @@ object WindowMain: TWindowMain
     ParentFont = False
     TabOrder = 3
     Text = '3050'
+  end
+  object ListDll: TCheckListBox
+    Left = 8
+    Top = 224
+    Width = 412
+    Height = 231
+    OnClickCheck = ListDllClickCheck
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    DoubleBuffered = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentDoubleBuffered = False
+    ParentFont = False
+    TabOrder = 4
+  end
+  object CheckAll: TCheckBox
+    Left = 11
+    Top = 205
+    Width = 17
+    Height = 17
+    TabOrder = 5
+    OnClick = CheckAllClick
   end
   object Actions: TActionList
     Images = Images
