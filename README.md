@@ -1,2 +1,2 @@
 # FirebirdInstaller
-Firebird custom installer...
+Firebird custom installer
