@@ -73,6 +73,7 @@ begin
   BoxVersionChange(BoxVersion);
   ActLoadFolders.Execute;
   UpdateButtons;
+  CheckAll.Checked := true;
 end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
