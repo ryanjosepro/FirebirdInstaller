@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Installer'
-  ClientHeight = 509
-  ClientWidth = 430
+  ClientHeight = 564
+  ClientWidth = 447
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3736,267 +3736,405 @@ object WindowMain: TWindowMain
   Position = poMainFormCenter
   OnActivate = FormActivate
   DesignSize = (
-    430
-    509)
+    447
+    564)
   PixelsPerInch = 96
   TextHeight = 13
-  object LblVersion: TLabel
-    Left = 8
-    Top = 8
-    Width = 40
-    Height = 16
-    Caption = 'Vers'#227'o'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object LblPath: TLabel
-    Left = 8
-    Top = 63
-    Width = 110
-    Height = 16
-    Caption = 'Pasta de instala'#231#227'o'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object BtnPath: TSpeedButton
-    Left = 393
-    Top = 85
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = ActPath
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 321
-  end
-  object LblServiceName: TLabel
-    Left = 8
-    Top = 123
-    Width = 95
-    Height = 16
-    Caption = 'Nome do servi'#231'o'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object LblPort: TLabel
-    Left = 358
-    Top = 123
-    Width = 30
-    Height = 16
-    Anchors = [akTop, akRight]
-    Caption = 'Porta'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    ExplicitLeft = 286
-  end
-  object LblDll: TLabel
-    Left = 8
-    Top = 183
-    Width = 179
-    Height = 16
-    Caption = 'Pastas para copiar a fbclient.dll'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object BtnAdd: TSpeedButton
-    Left = 209
-    Top = 178
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = ActAdd
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 280
-  end
-  object BtnRemove: TSpeedButton
-    Left = 242
-    Top = 178
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = ActRemove
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 313
-  end
-  object BtnInstall: TSpeedButton
-    Left = 219
-    Top = 461
-    Width = 201
-    Height = 40
-    Action = ActInstall
-    Anchors = [akLeft, akBottom]
-  end
-  object BtnUninstall: TSpeedButton
-    Left = 8
-    Top = 461
-    Width = 201
-    Height = 40
-    Action = ActUninstall
-    Anchors = [akRight, akBottom]
-    ExplicitTop = 444
-  end
-  object BtnLoadFolders: TSpeedButton
-    Left = 301
-    Top = 178
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = ActLoadFolders
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 372
-  end
-  object BtnCopyDll: TSpeedButton
-    Left = 360
-    Top = 178
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = ActCopyDll
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 431
-  end
-  object BtnDeleteDll: TSpeedButton
-    Left = 393
-    Top = 178
-    Width = 27
-    Height = 24
-    Cursor = crHandPoint
-    Action = DeleteDll
-    Anchors = [akTop, akRight]
-    ParentShowHint = False
-    ShowHint = True
-    ExplicitLeft = 464
-  end
-  object BoxVersion: TComboBox
-    Left = 8
-    Top = 27
-    Width = 412
-    Height = 22
-    Style = csDropDownList
-    Anchors = [akLeft, akTop, akRight]
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ItemIndex = 0
-    ParentFont = False
-    TabOrder = 0
-    Text = 'Firebird 2.1.7.18553'
-    OnChange = BoxVersionChange
-    Items.Strings = (
-      'Firebird 2.1.7.18553'
-      'Firebird 2.5.8.27089'
-      'Firebird 3.0.4.33054')
-  end
-  object TxtPath: TEdit
-    Left = 8
-    Top = 85
-    Width = 382
-    Height = 24
-    Anchors = [akLeft, akTop, akRight]
-    AutoSize = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    Text = 'C:\Program Files (x86)\Firebird\Firebird_2_1'
-  end
-  object TxtServiceName: TEdit
-    Left = 8
-    Top = 145
-    Width = 344
-    Height = 24
-    Anchors = [akLeft, akTop, akRight]
-    AutoSize = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-    Text = 'NETSide2.1'
-  end
-  object TxtPort: TEdit
-    Left = 358
-    Top = 145
-    Width = 62
-    Height = 24
-    Anchors = [akTop, akRight]
-    AutoSize = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    NumbersOnly = True
-    ParentFont = False
-    TabOrder = 3
-    Text = '3050'
-  end
-  object ListDll: TCheckListBox
-    Left = 8
-    Top = 224
-    Width = 412
-    Height = 231
-    OnClickCheck = ListDllClickCheck
+  object Page: TPageControl
+    Left = 0
+    Top = 0
+    Width = 449
+    Height = 569
+    ActivePage = TabSetup
     Anchors = [akLeft, akTop, akRight, akBottom]
-    DoubleBuffered = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentDoubleBuffered = False
-    ParentFont = False
-    TabOrder = 4
-  end
-  object CheckAll: TCheckBox
-    Left = 11
-    Top = 205
-    Width = 17
-    Height = 17
-    TabOrder = 5
-    OnClick = CheckAllClick
+    MultiLine = True
+    TabOrder = 0
+    TabWidth = 100
+    object TabSetup: TTabSheet
+      Caption = 'Setup'
+      ImageIndex = 1
+      DesignSize = (
+        441
+        541)
+      object BtnPath: TSpeedButton
+        Left = 406
+        Top = 80
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000650000
+          0088000000880000008800000088000000880000008800000088000000880000
+          0088000000880000008800000082000000110000000000000000000000A80000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000001C000000760000000000000000000000F30000
+          000E000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000900000000000000000000000BA0000
+          0061000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000005D0000003300000000000000880000
+          0091000000000000000000000000000000000000000000000000000000000000
+          00000000000000000000000000000000000B0000008400000000000000880000
+          0075000000200000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000008D00000005000000880000
+          001A000000760000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000450000004B000000880000
+          0000000000910000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000000000000020000008C000000880000
+          00000000005B0000006300000044000000440000004400000044000000440000
+          00440000004400000044000000440000004400000044000000A4000000880000
+          0000000000030000003F00000044000000440000004400000044000000440000
+          00440000004400000044000000440000005D0000008F0000002A000000880000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000220000006500000000000000880000
+          0000000000000000000000000000000000000000006D00000089000000880000
+          00880000008800000088000000880000008B00000022000000000000008B0000
+          0000000000000000000000000000000000340000007400000000000000000000
+          0000000000000000000000000000000000000000000000000000000000630000
+          00880000008800000088000000880000007C0000000200000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = ActPathExecute
+      end
+      object LblPort: TLabel
+        Left = 370
+        Top = 110
+        Width = 30
+        Height = 16
+        Anchors = [akTop, akRight]
+        Caption = 'Porta'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object BtnCopyDll: TSpeedButton
+        Left = 373
+        Top = 198
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Hint = 'Copiar dll para as pastas listadas'
+        Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000CD0000001100000011000000110000001100000011000000110000
+          00110000001100000011000000FF000000000000000000000000000000000000
+          0000000000C90000000000000000000000000000000000000000000000000000
+          00000000000000000000000000FF000000B50000002000000000000000000000
+          0000000000C900000000000000590000000A0000005900000059000000590000
+          00590000004500000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000085000000850000008500000085000000850000
+          00850000006700000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000000000000000000000000000000000000000000
+          00000000000000000000000000FF000000000000003F00000000000000000000
+          0000000000C900000000000000BE000000BE00000028000000BE000000BE0000
+          00BE0000009400000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000020000000200000002000000020000000200000
+          00200000001900000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000000000000000000000000000000000000000000
+          00000000000000000000000000FF000000000000003F00000000000000000000
+          0000000000C900000000000000ED000000ED000000ED000000ED0000007B0000
+          00ED000000B900000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000000000000000000000000000000000000000000
+          00000000000000000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000057000000570000005700000057000000570000
+          00570000004300000000000000FF000000000000003F00000000000000000000
+          0000000000C90000000000000087000000870000002200000000000000000000
+          005A0000007700000082000000AE000000000000003F00000000000000000000
+          0000000000C90000000000000000000000000000000000000000000000000000
+          005A0000000A000000B400000000000000000000003F00000000000000000000
+          0000000000D80000004400000044000000440000004400000044000000440000
+          0086000000AE0000000000000000000000000000003F00000000000000000000
+          0000000000000000000300000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000003F00000000000000000000
+          0000000000000000000B000000FF000000FF000000FF000000FF000000FF0000
+          00FF000000FF000000FF000000FF000000FF0000002E00000000}
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = ActCopyDllExecute
+      end
+      object BtnDeleteDll: TSpeedButton
+        Left = 406
+        Top = 198
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Hint = 'Deletar dll das pastas listadas'
+        Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00ED0000003800000014000000970000005C0000000000000000000000000000
+          001900000099000000990000009900000099000000990000001B000000E30000
+          0032000000410000000000000090000000250000002C00000000000000000000
+          004700000000000000000000000000000000000000000000001C000000050000
+          00CE00000034000000E50000008500000000000000F200000000000000000000
+          0047000000000000000000000000000000000000000000000055000000000000
+          0000000000DF000000080000006800000000000000C600000000000000000000
+          004700000000000000000000000000000000000000000000000A000000160000
+          00EA00000080000000E20000004900000000000000E500000000000000000000
+          0047000000000000000000000000000000000000000000000000000000E70000
+          0005000000090000000000000034000000610000000E00000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          00BC000000920000006F000000E80000001B0000000000000000000000000000
+          0047000000000000000000000077000000770000007700000050000000000000
+          000000000000000000000000001A000000000000000000000000000000000000
+          00470000000000000000000000CC000000CC000000CC000000CC000000CC0000
+          00CC000000CC0000000000000026000000000000000000000000000000000000
+          0047000000000000000000000011000000110000001100000011000000110000
+          0011000000110000000000000026000000000000000000000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000026000000000000000000000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000026000000000000000000000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          00F40000003300000033000000F6000000000000000000000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          00F400000000000000EB00000000000000000000000000000000000000000000
+          0047000000000000000000000000000000000000000000000000000000000000
+          00F4000000EB0000000000000000000000000000000000000000000000000000
+          0035000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+          00F4000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = DeleteDllExecute
+      end
+      object LblVersion: TLabel
+        Left = 8
+        Top = 8
+        Width = 40
+        Height = 16
+        Caption = 'Vers'#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblPath: TLabel
+        Left = 3
+        Top = 58
+        Width = 110
+        Height = 16
+        Caption = 'Pasta de instala'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblServiceName: TLabel
+        Left = 3
+        Top = 110
+        Width = 95
+        Height = 16
+        Caption = 'Nome do servi'#231'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblDll: TLabel
+        Left = 3
+        Top = 183
+        Width = 179
+        Height = 16
+        Caption = 'Pastas para copiar a fbclient.dll'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object BtnAdd: TSpeedButton
+        Left = 221
+        Top = 198
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Action = ActAdd
+        Anchors = [akTop, akRight]
+        ParentShowHint = False
+        ShowHint = True
+        ExplicitLeft = 237
+      end
+      object BtnRemove: TSpeedButton
+        Left = 254
+        Top = 198
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Action = ActRemove
+        Anchors = [akTop, akRight]
+        ParentShowHint = False
+        ShowHint = True
+        ExplicitLeft = 270
+      end
+      object BtnInstall: TSpeedButton
+        Left = 232
+        Top = 498
+        Width = 201
+        Height = 40
+        Action = ActInstall
+        Anchors = [akRight, akBottom]
+      end
+      object BtnUninstall: TSpeedButton
+        Left = 3
+        Top = 498
+        Width = 201
+        Height = 40
+        Action = ActUninstall
+        Anchors = [akRight, akBottom]
+      end
+      object BtnLoadFolders: TSpeedButton
+        Left = 313
+        Top = 198
+        Width = 27
+        Height = 24
+        Cursor = crHandPoint
+        Action = ActLoadFolders
+        Anchors = [akTop, akRight]
+        ParentShowHint = False
+        ShowHint = True
+        ExplicitLeft = 329
+      end
+      object CheckAll: TCheckBox
+        Left = 3
+        Top = 205
+        Width = 17
+        Height = 17
+        TabOrder = 0
+        OnClick = CheckAllClick
+      end
+      object TxtPort: TEdit
+        Left = 371
+        Top = 132
+        Width = 62
+        Height = 24
+        Anchors = [akTop, akRight]
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        NumbersOnly = True
+        ParentFont = False
+        TabOrder = 1
+        Text = '3050'
+      end
+      object BoxVersion: TComboBox
+        Left = 3
+        Top = 30
+        Width = 430
+        Height = 22
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemIndex = 0
+        ParentFont = False
+        TabOrder = 2
+        Text = 'Firebird 2.1.7.18553'
+        OnChange = BoxVersionChange
+        Items.Strings = (
+          'Firebird 2.1.7.18553'
+          'Firebird 2.5.8.27089'
+          'Firebird 3.0.4.33054')
+      end
+      object TxtPath: TEdit
+        Left = 3
+        Top = 80
+        Width = 397
+        Height = 24
+        Anchors = [akLeft, akTop, akRight]
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 3
+        Text = 'C:\Program Files (x86)\Firebird\Firebird_2_1'
+      end
+      object TxtServiceName: TEdit
+        Left = 3
+        Top = 132
+        Width = 361
+        Height = 24
+        Anchors = [akLeft, akTop, akRight]
+        AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 4
+        Text = 'NETSide2.1'
+      end
+      object ListDll: TCheckListBox
+        Left = 3
+        Top = 228
+        Width = 430
+        Height = 264
+        OnClickCheck = ListDllClickCheck
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        DoubleBuffered = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentDoubleBuffered = False
+        ParentFont = False
+        TabOrder = 5
+      end
+    end
+    object TabLog: TTabSheet
+      Caption = 'Log'
+      ImageIndex = 1
+      ExplicitWidth = 420
+      ExplicitHeight = 524
+      DesignSize = (
+        441
+        541)
+      object MemoLog: TMemo
+        Left = 0
+        Top = 3
+        Width = 438
+        Height = 518
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        TabOrder = 0
+      end
+    end
   end
   object Actions: TActionList
     Images = Images
-    Left = 88
-    Top = 320
+    Left = 224
+    Top = 128
     object ActPath: TAction
+      Caption = 'ActPath'
       ImageIndex = 0
       OnExecute = ActPathExecute
     end
@@ -4016,11 +4154,13 @@ object WindowMain: TWindowMain
       OnExecute = ActLoadFoldersExecute
     end
     object ActCopyDll: TAction
+      Caption = 'ActCopyDll'
       Hint = 'Copiar dll para as pastas listadas'
       ImageIndex = 4
       OnExecute = ActCopyDllExecute
     end
     object DeleteDll: TAction
+      Caption = 'DeleteDll'
       Hint = 'Deletar dll das pastas listadas'
       ImageIndex = 5
       OnExecute = DeleteDllExecute
@@ -4044,8 +4184,8 @@ object WindowMain: TWindowMain
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 24
-    Top = 320
+    Left = 160
+    Top = 128
     Bitmap = {
       494C010108005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -4455,15 +4595,15 @@ object WindowMain: TWindowMain
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 56
-    Top = 225
+    Left = 192
+    Top = 33
   end
   object OpenDllPath: TFileOpenDialog
     FavoriteLinks = <>
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 56
-    Top = 272
+    Left = 192
+    Top = 80
   end
 end

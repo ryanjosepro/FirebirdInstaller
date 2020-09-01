@@ -7,42 +7,46 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MySets, MyUtils, InstallConfigs, Installation;
+  MySets, MyUtils, InstallConfigs, Installation, Vcl.ComCtrls;
 
 type
   TWindowMain = class(TForm)
-    BoxVersion: TComboBox;
-    LblVersion: TLabel;
-    LblPath: TLabel;
-    TxtPath: TEdit;
     Actions: TActionList;
     ActPath: TAction;
-    ActEsc: TAction;
-    Images: TImageList;
-    BtnPath: TSpeedButton;
-    OpenFilePath: TFileOpenDialog;
-    LblServiceName: TLabel;
-    TxtServiceName: TEdit;
-    LblPort: TLabel;
-    TxtPort: TEdit;
-    LblDll: TLabel;
-    BtnAdd: TSpeedButton;
     ActAdd: TAction;
     ActRemove: TAction;
-    BtnRemove: TSpeedButton;
+    ActLoadFolders: TAction;
+    ActCopyDll: TAction;
+    DeleteDll: TAction;
     ActInstall: TAction;
     ActUninstall: TAction;
+    ActEsc: TAction;
+    Images: TImageList;
+    OpenFilePath: TFileOpenDialog;
+    OpenDllPath: TFileOpenDialog;
+    Page: TPageControl;
+    TabSetup: TTabSheet;
+    BtnPath: TSpeedButton;
+    LblPort: TLabel;
+    BtnCopyDll: TSpeedButton;
+    BtnDeleteDll: TSpeedButton;
+    LblVersion: TLabel;
+    LblPath: TLabel;
+    LblServiceName: TLabel;
+    LblDll: TLabel;
+    BtnAdd: TSpeedButton;
+    BtnRemove: TSpeedButton;
     BtnInstall: TSpeedButton;
     BtnUninstall: TSpeedButton;
-    OpenDllPath: TFileOpenDialog;
-    ActLoadFolders: TAction;
     BtnLoadFolders: TSpeedButton;
-    BtnCopyDll: TSpeedButton;
-    ActCopyDll: TAction;
-    BtnDeleteDll: TSpeedButton;
-    DeleteDll: TAction;
-    ListDll: TCheckListBox;
     CheckAll: TCheckBox;
+    TxtPort: TEdit;
+    BoxVersion: TComboBox;
+    TxtPath: TEdit;
+    TxtServiceName: TEdit;
+    ListDll: TCheckListBox;
+    TabLog: TTabSheet;
+    MemoLog: TMemo;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -73,7 +77,7 @@ begin
   BoxVersionChange(BoxVersion);
   ActLoadFolders.Execute;
   UpdateButtons;
-  CheckAll.Checked := true;
+  //CheckAll.Checked := true;
 end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
