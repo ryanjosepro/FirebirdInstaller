@@ -7,10 +7,33 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MySets, MyUtils, InstallConfigs, Installation, Vcl.ComCtrls;
+  MyUtils, Installation, Vcl.ComCtrls, WinSvc, Vcl.ExtCtrls;
 
 type
   TWindowMain = class(TForm)
+    Images: TImageList;
+    OpenFilePath: TFileOpenDialog;
+    OpenDllPath: TFileOpenDialog;
+    Page: TPageControl;
+    TabSetup: TTabSheet;
+    BtnPath: TSpeedButton;
+    LblPort: TLabel;
+    LblVersion: TLabel;
+    LblPath: TLabel;
+    LblServiceName: TLabel;
+    LblDll: TLabel;
+    CheckAll: TCheckBox;
+    TxtPort: TEdit;
+    BoxVersion: TComboBox;
+    TxtPath: TEdit;
+    TxtServiceName: TEdit;
+    ListDll: TCheckListBox;
+    BtnCopyDll: TSpeedButton;
+    BtnDeleteDll: TSpeedButton;
+    BtnAdd: TSpeedButton;
+    BtnRemove: TSpeedButton;
+    BtnStart: TSpeedButton;
+    BtnLoadFolders: TSpeedButton;
     Actions: TActionList;
     ActPath: TAction;
     ActAdd: TAction;
@@ -21,32 +44,16 @@ type
     ActInstall: TAction;
     ActUninstall: TAction;
     ActEsc: TAction;
-    Images: TImageList;
-    OpenFilePath: TFileOpenDialog;
-    OpenDllPath: TFileOpenDialog;
-    Page: TPageControl;
-    TabSetup: TTabSheet;
-    BtnPath: TSpeedButton;
-    LblPort: TLabel;
-    BtnCopyDll: TSpeedButton;
-    BtnDeleteDll: TSpeedButton;
-    LblVersion: TLabel;
-    LblPath: TLabel;
-    LblServiceName: TLabel;
-    LblDll: TLabel;
-    BtnAdd: TSpeedButton;
-    BtnRemove: TSpeedButton;
-    BtnInstall: TSpeedButton;
-    BtnUninstall: TSpeedButton;
-    BtnLoadFolders: TSpeedButton;
-    CheckAll: TCheckBox;
-    TxtPort: TEdit;
-    BoxVersion: TComboBox;
-    TxtPath: TEdit;
-    TxtServiceName: TEdit;
-    ListDll: TCheckListBox;
-    TabLog: TTabSheet;
+    BtnAddFirewall: TSpeedButton;
+    ActAddFirewall: TAction;
+    ActRemoveFirewall: TAction;
+    BtnRemoveFirewall: TSpeedButton;
+    BtnServices: TSpeedButton;
+    ActServices: TAction;
     MemoLog: TMemo;
+    BtnOpenDir: TSpeedButton;
+    ActOpenDir: TAction;
+    RadioGroupAction: TRadioGroup;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -60,6 +67,11 @@ type
     procedure BoxVersionChange(Sender: TObject);
     procedure CheckAllClick(Sender: TObject);
     procedure ListDllClickCheck(Sender: TObject);
+    procedure ActAddFirewallExecute(Sender: TObject);
+    procedure ActRemoveFirewallExecute(Sender: TObject);
+    procedure ActServicesExecute(Sender: TObject);
+    procedure ActOpenDirExecute(Sender: TObject);
+    procedure BtnStartClick(Sender: TObject);
   private
     function GetInstallation: TInstallation;
     procedure UpdateButtons;
@@ -147,12 +159,46 @@ begin
   end;
 end;
 
+procedure TWindowMain.ActAddFirewallExecute(Sender: TObject);
+begin
+  TUtils.AddFirewallPort('Firebird ' + TxtServiceName.Text, TxtPort.Text);
+  ShowMessage('Porta e serviço adicionados no firewall!');
+end;
+
+procedure TWindowMain.ActRemoveFirewallExecute(Sender: TObject);
+begin
+  TUtils.DeleteFirewallPort('Firebird ' + TxtServiceName.Text, TxtPort.Text);
+  ShowMessage('Porta e serviço removidos do firewall!');
+end;
+
+procedure TWindowMain.ActServicesExecute(Sender: TObject);
+begin
+  TUtils.ExecCmd('/C services.msc', 0);
+end;
+
+procedure TWindowMain.ActOpenDirExecute(Sender: TObject);
+begin
+  TUtils.OpenOnExplorer(TxtPath.Text);
+end;
+
+procedure TWindowMain.BtnStartClick(Sender: TObject);
+begin
+  case RadioGroupAction.ItemIndex of
+  0:
+    ActInstall.Execute;
+  1:
+    ActUninstall.Execute;
+  end;
+end;
+
 procedure TWindowMain.ActInstallExecute(Sender: TObject);
 var
   Installation: TInstallation;
 begin
   try
     Screen.Cursor := crHourGlass;
+
+    Application.ProcessMessages;
 
     Installation := GetInstallation;
 
@@ -169,6 +215,8 @@ var
 begin
   try
     screen.Cursor := crHourGlass;
+
+    Application.ProcessMessages;
 
     Installation := GetInstallation;
 
@@ -194,10 +242,10 @@ end;
 
 function TWindowMain.GetInstallation: TInstallation;
 var
-  Configs: TInstallConfigs;
+  Configs: TInstallConfig;
   I: integer;
 begin
-  Configs := TInstallConfigs.Create;
+  Configs := TInstallConfig.Create;
 
   with Configs do
   begin
@@ -206,6 +254,7 @@ begin
     ServiceName := TxtServiceName.Text;
     Port := TUtils.IfEmpty(TxtPort.Text, '3050');
     DllPaths := TStringList.Create;
+    Log := MemoLog;
 
     for I := 0 to ListDll.Count - 1 do
     begin

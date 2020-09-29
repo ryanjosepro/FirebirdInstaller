@@ -109,10 +109,8 @@
             <Form>WindowMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Code\MySets.pas"/>
         <DCCReference Include="Code\MyUtils.pas"/>
         <DCCReference Include="Code\MyArrays.pas"/>
-        <DCCReference Include="Controller\InstallConfigs.pas"/>
         <DCCReference Include="Code\MyDialogs.pas"/>
         <DCCReference Include="Controller\Installation.pas"/>
         <RcItem Include="Data\Dlls.zip">
@@ -161,13 +159,13 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Data\Firebird_3_0.zip" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="Data\Firebird_2_1.zip" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\FirebirdInstaller.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\src\FirebirdInstaller.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>FirebirdInstaller.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -185,7 +183,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Data\Firebird_2_1.zip" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="Data\Firebird_3_0.zip" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

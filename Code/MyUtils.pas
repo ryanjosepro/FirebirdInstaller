@@ -38,6 +38,10 @@ type
     class function GetLastFolder(Dir: String): String;
     class function AppPath: string;
 
+    class function IsFileInUse(FileName: TFileName): Boolean; static;
+
+    class procedure OpenOnExplorer(Path: string); static;
+
     class function BreakLine: string;
 
     class function Temp: string;
@@ -318,6 +322,29 @@ end;
 class function TUtils.AppPath: string;
 begin
   Result := ExtractFilePath(Application.ExeName);
+end;
+
+class function TUtils.IsFileInUse(FileName: TFileName): Boolean;
+var
+  HFileRes: HFILE;
+begin
+  Result := False;
+  if not FileExists(FileName) then Exit;
+  HFileRes := CreateFile(PChar(FileName),
+                         GENERIC_READ or GENERIC_WRITE,
+                         0,
+                         nil,
+                         OPEN_EXISTING,
+                         FILE_ATTRIBUTE_NORMAL,
+                         0);
+  Result := (HFileRes = INVALID_HANDLE_VALUE);
+  if not Result then
+    CloseHandle(HFileRes);
+end;
+
+class procedure TUtils.OpenOnExplorer(Path: string);
+begin
+  ShellExecute(0, PWideChar('explore'), PWideChar(Path), nil, nil, SW_SHOWNORMAL);
 end;
 
 //Retorna uma quebra de linha

@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Installer'
-  ClientHeight = 564
-  ClientWidth = 447
+  ClientHeight = 631
+  ClientWidth = 627
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3736,15 +3736,15 @@ object WindowMain: TWindowMain
   Position = poMainFormCenter
   OnActivate = FormActivate
   DesignSize = (
-    447
-    564)
+    627
+    631)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 449
-    Height = 569
+    Width = 629
+    Height = 636
     ActivePage = TabSetup
     Anchors = [akLeft, akTop, akRight, akBottom]
     MultiLine = True
@@ -3754,10 +3754,10 @@ object WindowMain: TWindowMain
       Caption = 'Setup'
       ImageIndex = 1
       DesignSize = (
-        441
-        541)
+        621
+        608)
       object BtnPath: TSpeedButton
-        Left = 406
+        Left = 462
         Top = 80
         Width = 27
         Height = 24
@@ -3801,9 +3801,10 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActPathExecute
+        ExplicitLeft = 495
       end
       object LblPort: TLabel
-        Left = 370
+        Left = 427
         Top = 110
         Width = 30
         Height = 16
@@ -3815,10 +3816,63 @@ object WindowMain: TWindowMain
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+        ExplicitLeft = 460
+      end
+      object LblVersion: TLabel
+        Left = 3
+        Top = 4
+        Width = 40
+        Height = 16
+        Caption = 'Vers'#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblPath: TLabel
+        Left = 3
+        Top = 58
+        Width = 110
+        Height = 16
+        Caption = 'Pasta de instala'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblServiceName: TLabel
+        Left = 3
+        Top = 110
+        Width = 95
+        Height = 16
+        Caption = 'Nome do servi'#231'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object LblDll: TLabel
+        Left = 3
+        Top = 162
+        Width = 179
+        Height = 16
+        Caption = 'Pastas para copiar a fbclient.dll'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
       end
       object BtnCopyDll: TSpeedButton
-        Left = 373
-        Top = 198
+        Left = 209
+        Top = 184
         Width = 27
         Height = 24
         Cursor = crHandPoint
@@ -3862,10 +3916,11 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActCopyDllExecute
+        ExplicitLeft = 226
       end
       object BtnDeleteDll: TSpeedButton
-        Left = 406
-        Top = 198
+        Left = 242
+        Top = 184
         Width = 27
         Height = 24
         Cursor = crHandPoint
@@ -3909,121 +3964,266 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = DeleteDllExecute
-      end
-      object LblVersion: TLabel
-        Left = 8
-        Top = 8
-        Width = 40
-        Height = 16
-        Caption = 'Vers'#227'o'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object LblPath: TLabel
-        Left = 3
-        Top = 58
-        Width = 110
-        Height = 16
-        Caption = 'Pasta de instala'#231#227'o'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object LblServiceName: TLabel
-        Left = 3
-        Top = 110
-        Width = 95
-        Height = 16
-        Caption = 'Nome do servi'#231'o'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object LblDll: TLabel
-        Left = 3
-        Top = 183
-        Width = 179
-        Height = 16
-        Caption = 'Pastas para copiar a fbclient.dll'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
+        ExplicitLeft = 259
       end
       object BtnAdd: TSpeedButton
-        Left = 221
-        Top = 198
+        Left = 57
+        Top = 184
         Width = 27
         Height = 24
         Cursor = crHandPoint
-        Action = ActAdd
+        Hint = 'Adicionar pasta'
         Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          00000000000000000000010201005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB0430000000000000000000000000000000000000000000000
+          0000000000005AAC42005CB043005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB043005CB0430023441B000000000000000000000000000000
+          00005CB043005CB043005CB043005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB043005CB043005CB0430023441B0000000000000000001C34
+          14005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB0430000000000000000005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300000000005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300325F25005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB0430057A740005CB0
+          43005CB043005CB04300FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00F7FBF6005CB043005CB043005CB043003B712B005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300040803005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300000000005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB043005CB04300000000004D93
+          38005CB043005CB043005CB043005CB043005CB043005CB04300FFFFFF005CB0
+          43005CB043005CB043005CB043005CB043005CB0430001020100000000000000
+          00005CB043005CB043005CB043005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB043005CB043005CB043005AAC420000000000000000000000
+          0000000000005CB043005CB043005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB043005CB043005CB043000000000000000000000000000000
+          000000000000000000004D9338005CB043005CB043005CB043005CB043005CB0
+          43005CB043005CB043001C341400000000000000000000000000000000000000
+          000000000000000000000000000000000000040803003B712B0057A74000325F
+          2500000000000000000000000000000000000000000000000000}
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 237
+        OnClick = ActAddExecute
+        ExplicitLeft = 74
       end
       object BtnRemove: TSpeedButton
-        Left = 254
-        Top = 198
+        Left = 90
+        Top = 184
         Width = 27
         Height = 24
         Cursor = crHandPoint
-        Action = ActRemove
+        Hint = 'Remover pasta selecionada'
         Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          00000000000000000000010103005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE00000000000000000000000000000000000000000000000
+          0000000000005D4DDA005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE000251E56000000000000000000000000000000
+          00005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE000251E560000000000000000001C19
+          43005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE00000000000000000005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE000000000005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE000332B79005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005A4BD4005F4F
+          E0005F4FE0005F4FE000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FBFAFE005F4FE0005F4FE0005F4FE0003D3390005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE00004040B005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE000000000005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE000000000005042
+          BB005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE00001010300000000000000
+          00005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0005D4DDA0000000000000000000000
+          0000000000005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0005F4FE0005F4FE0000000000000000000000000000000
+          000000000000000000005042BB005F4FE0005F4FE0005F4FE0005F4FE0005F4F
+          E0005F4FE0005F4FE0001C194300000000000000000000000000000000000000
+          00000000000000000000000000000000000004040B003D3390005A4BD400332B
+          7900000000000000000000000000000000000000000000000000}
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 270
+        OnClick = ActRemoveExecute
+        ExplicitLeft = 107
       end
-      object BtnInstall: TSpeedButton
-        Left = 232
-        Top = 498
-        Width = 201
-        Height = 40
-        Action = ActInstall
+      object BtnStart: TSpeedButton
+        Left = 447
+        Top = 552
+        Width = 166
+        Height = 53
         Anchors = [akRight, akBottom]
-      end
-      object BtnUninstall: TSpeedButton
-        Left = 3
-        Top = 498
-        Width = 201
-        Height = 40
-        Action = ActUninstall
-        Anchors = [akRight, akBottom]
+        Caption = 'Iniciar'
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000BD0000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00D6000000000000000000000000000000000000000000000000000000BD0000
+          00000000000000000000000000000000000000000000000000DE000000E40000
+          00D6000000000000000000000000000000000000000000000000000000BD0000
+          00000000000000000000000000000000000000000000000000540000004E0000
+          00D6000000000000000000000000000000000000000000000000000000BD0000
+          00000000009A000000BB000000BB000000BB000000BB000000B3000000000000
+          00D6000000000000000000000000000000000000000000000000000000BD0000
+          00000000009C00000000000000000000000000000000000000B5000000080000
+          00EA000000AE0000007B00000002000000000000000000000000000000BD0000
+          00000000002C0000006C0000006C0000006C0000006C000000F00000001F0000
+          0000000000000000000000000037000000D90000000000000000000000BD0000
+          00000000009C000000000000000000000000000000E000000000000000000000
+          000000000000000000000000000000000000000000EC00000000000000BD0000
+          00000000009C0000008800000088000000D500000000000000A3000000000000
+          0000000000000000000000000000000000D10000000000000070000000BD0000
+          00700000007700000077000000770000009B000000C800000009000000540000
+          005C000000E90000003700000090000000000000008C000000D7000000BD0000
+          00D60000000000000000000000000000002E000000C1000000AD000000060000
+          0024000000000000005D0000000000000070000000FA00000069000000BD0000
+          00D600000000000000000000000000000026000000B8000000B8000000100000
+          000B000000000000003C000000000000007C000000F300000060000000BD0000
+          00B6000000BB000000BB000000BB00000083000000E00000001D000000260000
+          00A8000000D30000007F0000005A00000003000000A4000000BE000000BD0000
+          00E1000000440000004400000044000000D80000000900000066000000130000
+          00000000000000000000000000130000009F000000000000009B000000BD0000
+          00D600000000000000000000000000000000000000B500000000000000000000
+          000000000000000000000000000000000000000000DE00000000000000BD0000
+          00EF000000990000009900000099000000990000009B000000F0000000000000
+          0000000000000000000000000006000000EB0000000000000000000000AA0000
+          00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+          00F1000000F9000000C600000032000000000000000000000000}
+        OnClick = BtnStartClick
       end
       object BtnLoadFolders: TSpeedButton
-        Left = 313
-        Top = 198
+        Left = 149
+        Top = 184
         Width = 27
         Height = 24
         Cursor = crHandPoint
-        Action = ActLoadFolders
+        Hint = 'Adicionar todas as pastas NETSide que est'#227'o em C:\'
         Anchors = [akTop, akRight]
+        Glyph.Data = {
+          36040000424D3604000000000000360000002800000010000000100000000100
+          2000000000000004000000000000000000000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          000000000000000000000000000000000027332911F92A210EF9000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          0000000000000000000000000026403315FAEBBB4DFF332911F9000000000000
+          0000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000024423415FAEBBB4DFF403315FA00000028000000000000
+          000000000000000000000000004C010000CE020201FA040301B8000000470000
+          000000000025000000FFEBBB4DFF423415FA0000002800000000000000000000
+          00000000000C010100FEDDB048FFD5A946FF81672AFFD5A946FFD5A946FF0303
+          01FD333E40FBCDF5FFFF000000FF000000280000000000000000000000000000
+          000C4A3B18FDA98637FF2D2920FFCFC4A1FFF4E7BEFFCFC4A1FF2D2920FFA986
+          37FF332911FB333E40FB00000028000000000000000000000000000000000101
+          00FEA98637FFB9AF90FFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFB9AF
+          90FFA98637FF030301FD000000000000000000000000000000000000004CDDB0
+          48FF2D2920FFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7
+          BEFF2D2920FFD5A946FF00000047000000000000000000000000010000CED5A9
+          46FFCFC4A1FFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7
+          BEFFCFC4A1FFD5A946FF040301B8000000000000000000000000020101FB8167
+          2AFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFE5D9
+          B2FFF4E7BEFF81672AFF020201FA000000000000000000000000010000CED5A9
+          46FFCFC4A1FFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFA39A
+          7FFFCFC4A1FFD5A946FF010000CE0000000000000000000000000000004CDDB0
+          48FF2D2920FFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFF4E7BEFFECE0B8FF3B38
+          2EFF2D2920FFDDB048FF0000004C000000000000000000000000000000000101
+          00FEA98637FFB9AF90FFF4E7BEFFF4E7BEFFCABF9DFF5E5949FF353229FFB9AF
+          90FFA98637FF010100FE00000000000000000000000000000000000000000000
+          000C4A3B18FDA98637FF2D2920FFCFC4A1FFF4E7BEFFCFC4A1FF2D2920FFA986
+          37FF4A3B18FD0000000C00000000000000000000000000000000000000000000
+          00000000000C010100FEDDB048FFD5A946FF81672AFFD5A946FFDDB048FF0101
+          00FE0000000C0000000000000000000000000000000000000000000000000000
+          000000000000000000000000004C010000CE020101FB010000CE0000004C0000
+          0000000000000000000000000000000000000000000000000000}
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 329
+        OnClick = ActLoadFoldersExecute
+        ExplicitLeft = 166
+      end
+      object BtnAddFirewall: TSpeedButton
+        Left = 495
+        Top = 26
+        Width = 118
+        Height = 26
+        Action = ActAddFirewall
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ExplicitLeft = 528
+      end
+      object BtnRemoveFirewall: TSpeedButton
+        Left = 371
+        Top = 26
+        Width = 118
+        Height = 26
+        Action = ActRemoveFirewall
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ExplicitLeft = 404
+      end
+      object BtnServices: TSpeedButton
+        Left = 495
+        Top = 132
+        Width = 118
+        Height = 24
+        Action = ActServices
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ExplicitLeft = 527
+      end
+      object BtnOpenDir: TSpeedButton
+        Left = 496
+        Top = 80
+        Width = 118
+        Height = 24
+        Action = ActOpenDir
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clTeal
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        ExplicitLeft = 528
       end
       object CheckAll: TCheckBox
         Left = 3
-        Top = 205
+        Top = 187
         Width = 17
         Height = 17
         TabOrder = 0
         OnClick = CheckAllClick
       end
       object TxtPort: TEdit
-        Left = 371
+        Left = 427
         Top = 132
         Width = 62
         Height = 24
@@ -4041,14 +4241,14 @@ object WindowMain: TWindowMain
       end
       object BoxVersion: TComboBox
         Left = 3
-        Top = 30
-        Width = 430
-        Height = 22
+        Top = 26
+        Width = 362
+        Height = 26
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Tahoma'
         Font.Style = []
         ItemIndex = 0
@@ -4064,7 +4264,7 @@ object WindowMain: TWindowMain
       object TxtPath: TEdit
         Left = 3
         Top = 80
-        Width = 397
+        Width = 453
         Height = 24
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -4080,7 +4280,7 @@ object WindowMain: TWindowMain
       object TxtServiceName: TEdit
         Left = 3
         Top = 132
-        Width = 361
+        Width = 418
         Height = 24
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -4095,9 +4295,9 @@ object WindowMain: TWindowMain
       end
       object ListDll: TCheckListBox
         Left = 3
-        Top = 228
-        Width = 430
-        Height = 264
+        Top = 214
+        Width = 266
+        Height = 332
         OnClickCheck = ListDllClickCheck
         Anchors = [akLeft, akTop, akRight, akBottom]
         DoubleBuffered = False
@@ -4110,75 +4310,34 @@ object WindowMain: TWindowMain
         ParentFont = False
         TabOrder = 5
       end
-    end
-    object TabLog: TTabSheet
-      Caption = 'Log'
-      ImageIndex = 1
-      ExplicitWidth = 420
-      ExplicitHeight = 524
-      DesignSize = (
-        441
-        541)
       object MemoLog: TMemo
-        Left = 0
-        Top = 3
-        Width = 438
-        Height = 518
-        Anchors = [akLeft, akTop, akRight, akBottom]
-        TabOrder = 0
+        Left = 275
+        Top = 162
+        Width = 337
+        Height = 384
+        Anchors = [akTop, akRight, akBottom]
+        ReadOnly = True
+        TabOrder = 6
       end
-    end
-  end
-  object Actions: TActionList
-    Images = Images
-    Left = 224
-    Top = 128
-    object ActPath: TAction
-      Caption = 'ActPath'
-      ImageIndex = 0
-      OnExecute = ActPathExecute
-    end
-    object ActAdd: TAction
-      Hint = 'Adicionar pasta'
-      ImageIndex = 1
-      OnExecute = ActAddExecute
-    end
-    object ActRemove: TAction
-      Hint = 'Remover pasta selecionada'
-      ImageIndex = 2
-      OnExecute = ActRemoveExecute
-    end
-    object ActLoadFolders: TAction
-      Hint = 'Adicionar todas as pastas NETSide que est'#227'o em C:\'
-      ImageIndex = 3
-      OnExecute = ActLoadFoldersExecute
-    end
-    object ActCopyDll: TAction
-      Caption = 'ActCopyDll'
-      Hint = 'Copiar dll para as pastas listadas'
-      ImageIndex = 4
-      OnExecute = ActCopyDllExecute
-    end
-    object DeleteDll: TAction
-      Caption = 'DeleteDll'
-      Hint = 'Deletar dll das pastas listadas'
-      ImageIndex = 5
-      OnExecute = DeleteDllExecute
-    end
-    object ActInstall: TAction
-      Caption = 'Instalar'
-      ImageIndex = 6
-      OnExecute = ActInstallExecute
-    end
-    object ActUninstall: TAction
-      Caption = 'Desinstalar'
-      ImageIndex = 7
-      OnExecute = ActUninstallExecute
-    end
-    object ActEsc: TAction
-      Caption = 'ActEsc'
-      ShortCut = 27
-      OnExecute = ActEscExecute
+      object RadioGroupAction: TRadioGroup
+        Left = 3
+        Top = 552
+        Width = 438
+        Height = 51
+        Caption = 'A'#231#227'o'
+        Columns = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -16
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemIndex = 0
+        Items.Strings = (
+          'Instalar'
+          'Desinstalar')
+        ParentFont = False
+        TabOrder = 7
+      end
     end
   end
   object Images: TImageList
@@ -4595,8 +4754,8 @@ object WindowMain: TWindowMain
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 192
-    Top = 33
+    Left = 264
+    Top = 73
   end
   object OpenDllPath: TFileOpenDialog
     FavoriteLinks = <>
@@ -4605,5 +4764,76 @@ object WindowMain: TWindowMain
     Options = [fdoPickFolders]
     Left = 192
     Top = 80
+  end
+  object Actions: TActionList
+    Images = Images
+    Left = 224
+    Top = 128
+    object ActPath: TAction
+      Caption = 'ActPath'
+      ImageIndex = 0
+      OnExecute = ActPathExecute
+    end
+    object ActAdd: TAction
+      Caption = 'ActAdd'
+      Hint = 'Adicionar pasta'
+      ImageIndex = 1
+      OnExecute = ActAddExecute
+    end
+    object ActRemove: TAction
+      Caption = 'ActRemove'
+      Hint = 'Remover pasta selecionada'
+      ImageIndex = 2
+      OnExecute = ActRemoveExecute
+    end
+    object ActLoadFolders: TAction
+      Caption = 'ActLoadFolders'
+      Hint = 'Adicionar todas as pastas NETSide que est'#227'o em C:\'
+      ImageIndex = 3
+      OnExecute = ActLoadFoldersExecute
+    end
+    object ActCopyDll: TAction
+      Caption = 'ActCopyDll'
+      Hint = 'Copiar dll para as pastas listadas'
+      ImageIndex = 4
+      OnExecute = ActCopyDllExecute
+    end
+    object DeleteDll: TAction
+      Caption = 'DeleteDll'
+      Hint = 'Deletar dll das pastas listadas'
+      ImageIndex = 5
+      OnExecute = DeleteDllExecute
+    end
+    object ActAddFirewall: TAction
+      Caption = 'Adicionar no Firewall'
+      OnExecute = ActAddFirewallExecute
+    end
+    object ActRemoveFirewall: TAction
+      Caption = 'Remover do Firewall'
+      OnExecute = ActRemoveFirewallExecute
+    end
+    object ActOpenDir: TAction
+      Caption = 'Abrir no Explorer'
+      OnExecute = ActOpenDirExecute
+    end
+    object ActServices: TAction
+      Caption = 'Servi'#231'os'
+      OnExecute = ActServicesExecute
+    end
+    object ActInstall: TAction
+      Caption = 'Instalar'
+      ImageIndex = 6
+      OnExecute = ActInstallExecute
+    end
+    object ActUninstall: TAction
+      Caption = 'Desinstalar'
+      ImageIndex = 7
+      OnExecute = ActUninstallExecute
+    end
+    object ActEsc: TAction
+      Caption = 'ActEsc'
+      ShortCut = 27
+      OnExecute = ActEscExecute
+    end
   end
 end

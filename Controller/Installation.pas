@@ -4,15 +4,51 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.StrUtils, Vcl.Dialogs, Vcl.Controls, IniFiles,
-  IOUtils, ShellApi, Windows,
-  MySets, MyUtils, MyDialogs, InstallConfigs;
+  IOUtils, ShellApi, Windows, Zip, Vcl.Forms, Vcl.StdCtrls,
+  MyUtils, MyDialogs;
 
 type
+  TVersion = (vrFb21 = 0, vrFb25 = 1, vrFb30 = 2, vrFb40 = 3);
+
+  TInstallConfig = class
+  strict private
+    FVersion: TVersion;
+    FPath: string;
+    FServiceName: string;
+    FPort: string;
+    FDllPaths: TStringList;
+    FLog: TMemo;
+    procedure SetVersion(const Value: TVersion);
+    procedure SetPath(const Value: string);
+    procedure SetServiceName(const Value: string);
+    procedure SetPort(const Value: string);
+    procedure SetDllPaths(const Value: TStringList);
+    procedure SetLog(const Value: TMemo);
+
+    function FolderName: string;
+    function DllName: string;
+    function ResourceName: string;
+  public
+    property Version: TVersion read FVersion write SetVersion;
+    property Path: string read FPath write SetPath;
+    property ServiceName: string read FServiceName write SetServiceName;
+    property Port: string read FPort write SetPort;
+    property DllPaths: TStringList read FDllPaths write SetDllPaths;
+    property Log: TMemo read FLog write SetLog;
+
+    function PathBin: string;
+    function PathConf: string;
+    function Source(Extract: boolean = true): string;
+    function SourceBin(Extract: boolean = false): string;
+    function SourceDll: string;
+  end;
+
   TInstallation = class
   private
-    Configs: TInstallConfigs;
+    Configs: TInstallConfig;
+    procedure Log(Text: string);
   public
-    constructor Create(Configs: TInstallConfigs);
+    constructor Create(Configs: TInstallConfig);
     procedure CopyDll;
     procedure DeleteDll;
     procedure Install;
@@ -21,11 +57,151 @@ type
 
 implementation
 
-{ TController }
+{ TInstallationConfigs }
 
-constructor TInstallation.Create(Configs: TInstallConfigs);
+procedure TInstallConfig.SetVersion(const Value: TVersion);
+begin
+  FVersion := Value;
+end;
+
+procedure TInstallConfig.SetPath(const Value: string);
+begin
+  FPath := Value;
+end;
+
+procedure TInstallConfig.SetServiceName(const Value: string);
+begin
+  FServiceName := Value;
+end;
+
+procedure TInstallConfig.SetPort(const Value: string);
+begin
+  FPort := Value;
+end;
+
+procedure TInstallConfig.SetDllPaths(const Value: TStringList);
+begin
+  FDllPaths := Value;
+end;
+
+procedure TInstallConfig.SetLog(const Value: TMemo);
+begin
+  FLog := Value;
+end;
+
+//Destinos
+function TInstallConfig.PathBin: string;
+begin
+  case Version of
+  vrFb21, vrFb25:
+    Result := Path + '\Bin';
+  vrFb30, vrFb40:
+    Result := Path;
+  end;
+end;
+
+function TInstallConfig.PathConf: string;
+begin
+  Result := Path + '\firebird.conf';
+end;
+
+//Fontes
+function TInstallConfig.Source(Extract: boolean = true): string;
+begin
+  if Extract then
+  begin
+    TUtils.DeleteIfExistsDir(TUtils.Temp + FolderName);
+
+    //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
+
+    TUtils.ExtractResourceZip(ResourceName, TUtils.Temp);
+  end;
+
+  Result := TUtils.Temp + FolderName;
+end;
+
+function TInstallConfig.SourceBin(Extract: boolean = false): string;
+begin
+  case Version of
+  vrFb21, vrFb25:
+    Result := Source(Extract) + '\Bin';
+  vrFb30, vrFb40:
+    Result := Source(Extract);
+  end;
+end;
+
+function TInstallConfig.SourceDll: string;
+begin
+  TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
+
+  //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data\Dlls.zip', TUtils.Temp);
+
+  TUtils.ExtractResourceZip('DataDlls', TUtils.Temp);
+
+  Result := TUtils.Temp + '\Dlls' + DllName;
+end;
+
+//Nome da pasta pela versão
+function TInstallConfig.FolderName: string;
+begin
+  case Version of
+  vrFb21:
+    Result := '\Firebird_2_1';
+  vrFb25:
+    Result := '\Firebird_2_5';
+  vrFb30:
+    Result := '\Firebird_3_0';
+  vrFb40:
+    Result := '\Firebird_4_0';
+  end;
+end;
+
+function TInstallConfig.DllName: string;
+begin
+  case Version of
+  vrFb21:
+    Result := '\fbclient21.dll';
+  vrFb25:
+    Result := '\fbclient25.dll';
+  vrFb30:
+    Result := '\fbclient30.dll';
+  vrFb40:
+    Result := '\fbclient40.dll';
+  end;
+end;
+
+//Nome do resource pela versão
+function TInstallConfig.ResourceName: string;
+begin
+  case Version of
+  vrFb21:
+    Result := 'DataFB21';
+  vrFb25:
+    Result := 'DataFB25';
+  vrFb30:
+    Result := 'DataFB30';
+  vrFb40:
+    Result := 'DataFB40';
+  end;
+end;
+
+
+
+{ TInstallation }
+
+constructor TInstallation.Create(Configs: TInstallConfig);
 begin
   self.Configs := Configs;
+end;
+
+procedure TInstallation.Log(Text: string);
+begin
+  if Configs.Log <> nil then
+  begin
+    Configs.Log.Lines.Add(Text);
+
+    Application.ProcessMessages;
+  end;
 end;
 
 procedure TInstallation.CopyDll;
@@ -52,100 +228,247 @@ end;
 procedure TInstallation.Install;
 var
   Cancel: boolean;
-  Arq: TStringList;
-  CdBin: string;
+  ConfFile: TStringList;
+  PathFiles: TArray<string>;
+  PathFileName, FilesInUse, CdBin: string;
 begin
-  if TDirectory.Exists(Configs.Path) then
-  begin
-    if TDialogs.YesNo('A pasta de instalação "' + Configs.Path + '" já existe, deseja sobreescrevê-la?' +
-    TUtils.BreakLine + 'Tenha certeza de que a pasta não está em uso!') = mrYes then
-    begin
-      TDirectory.Delete(Configs.Path, true);
-    end
-    else
-    begin
-      Cancel := true;
-    end;
-  end;
+  try
+    if Configs.Log <> nil then
+      Configs.Log.Clear;
 
-  if not Cancel then
-  begin
+    Application.ProcessMessages;
+
+    Log('Iniciando instalação');
+    Log('');
+    Log('*******************************');
+    Log('Path: ' + Configs.Path);
+    Log('Service: ' + Configs.ServiceName);
+    Log('Port: ' + Configs.Port);
+    Log('*******************************');
+    Log('');
+
+    Log('Verificando se o diretório já existe');
+
     if TDirectory.Exists(Configs.Path) then
     begin
-      ShowMessage('Erro na pasta de instalação, verifique se a '+
-      'versão do Firebird que você está tentando instalar já '+
-      'está instalada, ou se a pasta de instalação está em uso!');
+      if TDialogs.YesNo('A pasta de instalação "' + Configs.Path + '" já existe, deseja sobreescrevê-la?' +
+      TUtils.BreakLine + 'Tenha certeza de que a pasta não está em uso!') = mrYes then
+      begin
+
+        Log('Verificando se os arquivos estão em uso');
+
+        //Verificação aquivos em uso
+        PathFiles := TDirectory.GetFiles(Configs.Path);
+
+        for PathFileName in PathFiles do
+        begin
+          if TUtils.IsFileInUse(PathFileName) then
+          begin
+            FilesInUse := FilesInUse + TUtils.BreakLine + PathFileName;
+          end;
+        end;
+
+        if FilesInUse <> '' then
+        begin
+          Cancel := true;
+
+          ShowMessage('Erro ao sobreescrever a pasta de instalação, os seguintes arquivos estão em uso '+
+          TUtils.BreakLine + FilesInUse);
+        end;
+
+        Log('Deletando diretório');
+
+        TDirectory.Delete(Configs.Path, true);
+
+        Application.ProcessMessages;
+      end
+      else
+      begin
+        Cancel := true;
+      end;
+    end;
+
+    if not Cancel then
+    begin
+      if TDirectory.Exists(Configs.Path) then
+      begin
+        Log('Desinstalação cancelada');
+
+        ShowMessage('Erro na pasta de instalação, verifique se a '+
+        'versão do Firebird que você está tentando instalar já '+
+        'está instalada, ou se a pasta de instalação está em uso!');
+      end
+      else
+      begin
+        Log('Copiando arquivos de instalação para ' + Configs.Path);
+
+        TDirectory.Copy(Configs.Source, Configs.Path);
+
+        Log('Configurando porta');
+
+        ConfFile := TStringList.Create;
+
+        ConfFile.LoadFromFile(Configs.PathConf);
+
+        ConfFile.Insert(0, 'RemoteServicePort = ' + Configs.Port);
+
+        ConfFile.SaveToFile(Configs.PathConf);
+
+        CdBin := 'cd ' + Configs.PathBin;
+
+        Log('Instalando registro');
+
+        TUtils.ExecDos(CdBin + ' && instreg r');
+
+        Log('Instalando serviço');
+
+        TUtils.ExecDos(CdBin + ' && instsvc i -a -g -n ' + Configs.ServiceName);
+
+        Log('Iniciando serviço');
+
+        TUtils.ExecDos(CdBin + ' && instsvc start -n ' + Configs.ServiceName);
+
+        Log('Copiando Dlls');
+
+        CopyDll;
+
+        Log('Adicionando ao firewall');
+
+        TUtils.AddFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
+
+        Log('Instalação concluída');
+
+        ShowMessage('Instalação Concluída!');
+      end;
     end
     else
     begin
-      TDirectory.Copy(Configs.Source, Configs.Path);
-
-      Arq := TStringList.Create;
-
-      Arq.LoadFromFile(Configs.PathConf);
-
-      Arq.Insert(0, 'RemoteServicePort = ' + Configs.Port);
-
-      Arq.SaveToFile(Configs.PathConf);
-
-      CdBin := 'cd ' + Configs.PathBin;
-
-      TUtils.ExecDos(CdBin + ' && instreg r');
-      TUtils.ExecDos(CdBin + ' && instsvc i -a -g -n ' + Configs.ServiceName);
-      TUtils.ExecDos(CdBin + ' && instsvc start -n ' + Configs.ServiceName);
-
-      CopyDll;
-
-      TUtils.AddFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
-
-      ShowMessage('Instalação Concluída!');
+      Log('Instalação cancelada')
     end;
+  Except on E: Exception do
+    Log('Erro: ' + E.Message);
   end;
 end;
 
 procedure TInstallation.Uninstall;
 var
-  CdBin: string;
+  ConfFile: TStringList;
+  PathFiles: TArray<string>;
+  PathFileName, FilesInUse, CdBin: string;
 begin
-  if TDialogs.YesNo('Tem certeza que deseja desinstalar o firebird no diretório "' + Configs.Path + '"?') = mrYes then
-  begin
-    if DirectoryExists(Configs.Path) then
+  try
+    if Configs.Log <> nil then
+      Configs.Log.Clear;
+
+    Application.ProcessMessages;
+
+    Log('Iniciando instalação');
+    Log('');
+    Log('*******************************');
+    Log('Path: ' + Configs.Path);
+    Log('Service: ' + Configs.ServiceName);
+    Log('Port: ' + Configs.Port);
+    Log('*******************************');
+    Log('');
+
+    if TDialogs.YesNo('Tem certeza que deseja desinstalar o firebird no diretório "' + Configs.Path + '"?') = mrYes then
     begin
-      if DirectoryExists(Configs.PathBin) then
-      begin
-        if not FileExists(Configs.PathBin + '\instsvc.exe') then
-          TFile.Copy(Configs.SourceBin(true) + '\instsvc.exe', Configs.PathBin + '\instsvc.exe');
-        if not FileExists(Configs.PathBin + '\instreg.exe') then
-          TFile.Copy(Configs.SourceBin + '\instreg.exe', Configs.PathBin + '\instreg.exe');
-
-        CdBin := 'cd ' + Configs.PathBin;
-
-        TUtils.ExecDos(CdBin + ' && instsvc stop -n ' + Configs.ServiceName);
-        TUtils.ExecDos(CdBin + ' && instsvc r -n ' + Configs.ServiceName);
-        TUtils.ExecDos(CdBin + ' && instreg r');
-      end;
-
-      TDirectory.Delete(Configs.Path, true);
+      Log('Verificando se o diretório existe');
 
       if DirectoryExists(Configs.Path) then
       begin
-        ShowMessage('Erro ao desinstalar, verifique se o '+
-        'nome do serviço é o referente ao da pasta de '+
-        'instalação, ou se a pasta de instalação está em uso!');
+        Log('Verificando se a pasta bin existe');
+
+        if DirectoryExists(Configs.PathBin) then
+        begin
+          Log('Repondo arquivos de desinstalação caso não existam');
+
+          if not FileExists(Configs.PathBin + '\instsvc.exe') then
+            TFile.Copy(Configs.SourceBin(true) + '\instsvc.exe', Configs.PathBin + '\instsvc.exe');
+          if not FileExists(Configs.PathBin + '\instreg.exe') then
+            TFile.Copy(Configs.SourceBin + '\instreg.exe', Configs.PathBin + '\instreg.exe');
+
+          CdBin := 'cd ' + Configs.PathBin;
+
+          Log('Parando serviço');
+
+          TUtils.ExecDos(CdBin + ' && instsvc stop -n ' + Configs.ServiceName);
+
+          Log('Desinstalando serviço');
+
+          TUtils.ExecDos(CdBin + ' && instsvc r -n ' + Configs.ServiceName);
+
+          Log('Desinstalando registro');
+
+          TUtils.ExecDos(CdBin + ' && instreg r');
+        end;
+
+        Application.ProcessMessages;
+
+        Log('Verificando se os arquivos estão em uso');
+
+        //Verificação aquivos em uso
+        PathFiles := TDirectory.GetFiles(Configs.Path);
+
+        for PathFileName in PathFiles do
+        begin
+          if TUtils.IsFileInUse(PathFileName) then
+          begin
+            FilesInUse := FilesInUse + TUtils.BreakLine + PathFileName;
+          end;
+        end;
+
+        if FilesInUse <> '' then
+        begin
+          Log('Desinstalação cancelada');
+
+          ShowMessage('Erro ao desinstalar, os seguintes arquivos estão em uso '+
+          TUtils.BreakLine + FilesInUse);
+        end
+        else
+        begin
+          Log('Deletando pasta de instalação');
+
+          TDirectory.Delete(Configs.Path, true);
+
+          Application.ProcessMessages;
+
+          if DirectoryExists(Configs.Path) then
+          begin
+            Log('Desinstalação cancelada');
+
+            ShowMessage('Erro ao desinstalar, verifique se o '+
+            'nome do serviço é o referente ao da pasta de '+
+            'instalação, ou se a pasta de instalação está em uso!');
+          end
+          else
+          begin
+            Log('Deletando Dlls');
+
+            DeleteDll;
+
+            Log('Removendo do firewall');
+
+            TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
+
+            Log('Desinstalação concluída');
+
+            ShowMessage('Desinstalação Concluída');
+          end;
+        end;
       end
       else
       begin
-        DeleteDll;
-
-        TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
-
-        ShowMessage('Desinstalação Concluída');
+        Log('Desinstalação cancelada');
+        ShowMessage('Erro ao desinstalar, diretório inexistente!');
       end;
     end
     else
     begin
-      ShowMessage('Erro ao desinstalar, diretório inexistente!');
+      Log('Desinstalação cancelada');
     end;
+  except on E: Exception do
+    Log('Erro: ' + E.Message);
   end;
 end;
 
