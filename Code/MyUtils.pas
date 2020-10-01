@@ -4,10 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils, System.Zip,
-  ShellAPI, Vcl.Forms, Windows, IOUtils,
+  ShellAPI, Vcl.Forms, Windows, IOUtils, WinSvc,
   MyArrays;
 
 type
+  TStatusService =  (csNotInstalled, csStopped, csStartPending, csStopPending, csRunning,
+   csContinuePending, csPausePending, csPaused);
 
   TUtils = class
   public
@@ -51,6 +53,12 @@ type
     class procedure DeleteFirewallPort(RuleName, Port: string);
 
     class procedure ExtractResourceZip(ResourceName, Path: string);
+
+    class function GetServiceStatus(sMachine, sService: string): DWORD; static;
+    class function GetServiceExecutablePath(strMachine, strServiceName: string): String; static;
+    class procedure RemoveService(Service: string);
+    class procedure StopService(Service: string);
+    class procedure StartService(Service: string);
   end;
 
 implementation
@@ -386,6 +394,75 @@ begin
     FreeAndNil(Stream);
     FreeAndNil(ZipFile);
   end;
+end;
+
+class function TUtils.GetServiceStatus(sMachine, sService: string): DWORD;
+var
+  schm, schs: SC_Handle;
+  ss: TServiceStatus;
+  dwStat: DWORD;
+begin
+  dwStat := 0;
+  schm := OpenSCManager(PChar(sMachine), Nil, SC_MANAGER_CONNECT);
+  if (schm > 0) then
+  begin
+    schs := OpenService(schm, PChar(sService), SERVICE_QUERY_STATUS);
+    if (schs > 0) then
+    begin
+      if (QueryServiceStatus(schs, ss)) then
+      begin
+        dwStat := ss.dwCurrentState;
+      end;
+      CloseServiceHandle(schs);
+    end;
+    CloseServiceHandle(schm);
+  end;
+  Result := dwStat;
+end;
+
+class function TUtils.GetServiceExecutablePath(strMachine: string; strServiceName: string): String;
+var
+  hSCManager,hSCService: SC_Handle;
+  lpServiceConfig: PQueryServiceConfigW;
+  nSize, nBytesNeeded: DWord;
+begin
+  Result := '';
+  hSCManager := OpenSCManager(PChar(strMachine), nil, SC_MANAGER_CONNECT);
+  if (hSCManager > 0) then
+  begin
+    hSCService := OpenService(hSCManager, PChar(strServiceName), SERVICE_QUERY_CONFIG);
+    if (hSCService > 0) then
+    begin
+      QueryServiceConfig(hSCService, nil, 0, nSize);
+      lpServiceConfig := AllocMem(nSize);
+      try
+        if not QueryServiceConfig(hSCService, lpServiceConfig, nSize, nBytesNeeded) Then
+        begin
+          Exit;
+        end;
+
+        Result := lpServiceConfig^.lpBinaryPathName;
+      finally
+        Dispose(lpServiceConfig);
+      end;
+      CloseServiceHandle(hSCService);
+    end;
+  end;
+end;
+
+class procedure TUtils.RemoveService(Service: string);
+begin
+  TUtils.ExecDos('sc delete ' + Service);
+end;
+
+class procedure TUtils.StopService(Service: string);
+begin
+  TUtils.ExecDos('sc stop ' + Service);
+end;
+
+class procedure TUtils.StartService(Service: string);
+begin
+  TUtils.ExecDos('sc start ' + Service);
 end;
 
 end.

@@ -26,13 +26,11 @@ type
     TxtPort: TEdit;
     BoxVersion: TComboBox;
     TxtPath: TEdit;
-    TxtServiceName: TEdit;
-    ListDll: TCheckListBox;
     BtnCopyDll: TSpeedButton;
     BtnDeleteDll: TSpeedButton;
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
-    BtnStart: TSpeedButton;
+    BtnExecute: TSpeedButton;
     BtnLoadFolders: TSpeedButton;
     Actions: TActionList;
     ActPath: TAction;
@@ -53,7 +51,20 @@ type
     MemoLog: TMemo;
     BtnOpenDir: TSpeedButton;
     ActOpenDir: TAction;
-    RadioGroupAction: TRadioGroup;
+    LblDefaultInstance: TLabel;
+    ListDll: TCheckListBox;
+    TxtServiceName: TEdit;
+    RadioGroupMethod: TRadioGroup;
+    ActStart: TAction;
+    ShapeStatusService: TShape;
+    TimerStatus: TTimer;
+    ShapeStatusPath: TShape;
+    BtnRemoveService: TSpeedButton;
+    BtnStopService: TSpeedButton;
+    BtnStartService: TSpeedButton;
+    ActRemoveService: TAction;
+    ActStopService: TAction;
+    ActStartService: TAction;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -71,7 +82,12 @@ type
     procedure ActRemoveFirewallExecute(Sender: TObject);
     procedure ActServicesExecute(Sender: TObject);
     procedure ActOpenDirExecute(Sender: TObject);
-    procedure BtnStartClick(Sender: TObject);
+    procedure ActStartExecute(Sender: TObject);
+    procedure RadioGroupMethodClick(Sender: TObject);
+    procedure TimerStatusTimer(Sender: TObject);
+    procedure ActRemoveServiceExecute(Sender: TObject);
+    procedure ActStopServiceExecute(Sender: TObject);
+    procedure ActStartServiceExecute(Sender: TObject);
   private
     function GetInstallation: TInstallation;
     procedure UpdateButtons;
@@ -90,6 +106,48 @@ begin
   ActLoadFolders.Execute;
   UpdateButtons;
   //CheckAll.Checked := true;
+end;
+
+procedure TWindowMain.TimerStatusTimer(Sender: TObject);
+var
+  ServiceStatus: Cardinal;
+begin
+  if TDirectory.Exists(TxtPath.Text) then
+  begin
+    ShapeStatusPath.Brush.Color := clGreen;
+    ShapeStatusPath.Hint := 'Diretório Existente';
+  end
+  else
+  begin
+    ShapeStatusPath.Brush.Color := clRed;
+    ShapeStatusPath.Hint := 'Diretório Não Existente';
+  end;
+
+  ServiceStatus := TUtils.GetServiceStatus('', 'FirebirdServer' + TUtils.IfEmpty(TxtServiceName.Text, 'DefaultInstance'));
+
+  case TStatusService(ServiceStatus) of
+  csNotInstalled:
+  begin
+    ShapeStatusService.Brush.Color := clRed;
+    ShapeStatusService.Hint := 'Serviço Não Instalado';
+  end;
+  csPaused:
+  begin
+    ShapeStatusService.Brush.Color := clYellow;
+    ShapeStatusService.Hint := 'Serviço Pausado';
+  end;
+  csStopped:
+  begin
+    ShapeStatusService.Brush.Color := clYellow;
+    ShapeStatusService.Hint := 'Serviço Parado';
+  end;
+  csRunning:
+  begin
+    ShapeStatusService.Brush.Color := clGreen;
+    ShapeStatusService.Hint := 'Serviço Rodando';
+  end;
+  end;
+
 end;
 
 procedure TWindowMain.ActAddExecute(Sender: TObject);
@@ -176,18 +234,38 @@ begin
   TUtils.ExecCmd('/C services.msc', 0);
 end;
 
+procedure TWindowMain.ActRemoveServiceExecute(Sender: TObject);
+begin
+  TUtils.RemoveService('FirebirdServer' + TxtServiceName.Text);
+end;
+
+procedure TWindowMain.ActStopServiceExecute(Sender: TObject);
+begin
+  TUtils.StopService('FirebirdServer' + TxtServiceName.Text);
+end;
+
+procedure TWindowMain.ActStartServiceExecute(Sender: TObject);
+begin
+  TUtils.StartService('FirebirdServer' + TxtServiceName.Text);
+end;
+
 procedure TWindowMain.ActOpenDirExecute(Sender: TObject);
 begin
   TUtils.OpenOnExplorer(TxtPath.Text);
 end;
 
-procedure TWindowMain.BtnStartClick(Sender: TObject);
+procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
 begin
-  case RadioGroupAction.ItemIndex of
+  TxtPath.Enabled := RadioGroupMethod.ItemIndex = 1;
+end;
+
+procedure TWindowMain.ActStartExecute(Sender: TObject);
+begin
+  case RadioGroupMethod.ItemIndex of
   0:
-    ActInstall.Execute;
-  1:
     ActUninstall.Execute;
+  1:
+    ActInstall.Execute;
   end;
 end;
 
@@ -278,17 +356,26 @@ begin
     TxtServiceName.Text := 'NETSide2.1';
     TxtPort.Text := '3050';
   end;
+
   vrFb25:
   begin
     TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_2_5';
     TxtServiceName.Text := 'NETSide2.5';
     TxtPort.Text := '3060';
   end;
+
   vrFb30:
   begin
     TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_3_0';
     TxtServiceName.Text := 'NETSide3.0';
     TxtPort.Text := '3070';
+  end;
+
+  vrFb40:
+  begin
+    TxtPath.Text := 'C:\Program Files (x86)\Firebird\Firebird_4_0';
+    TxtServiceName.Text := 'NETSide4.0';
+    TxtPort.Text := '3080';
   end;
   end;
 end;

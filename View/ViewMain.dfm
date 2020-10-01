@@ -5,7 +5,7 @@ object WindowMain: TWindowMain
   BorderStyle = bsSingle
   Caption = 'Firebird Installer'
   ClientHeight = 631
-  ClientWidth = 627
+  ClientWidth = 636
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -3736,14 +3736,14 @@ object WindowMain: TWindowMain
   Position = poMainFormCenter
   OnActivate = FormActivate
   DesignSize = (
-    627
+    636
     631)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 629
+    Width = 638
     Height = 636
     ActivePage = TabSetup
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -3753,11 +3753,13 @@ object WindowMain: TWindowMain
     object TabSetup: TTabSheet
       Caption = 'Setup'
       ImageIndex = 1
+      ExplicitLeft = 8
+      ExplicitTop = 26
       DesignSize = (
-        621
+        630
         608)
       object BtnPath: TSpeedButton
-        Left = 462
+        Left = 471
         Top = 80
         Width = 27
         Height = 24
@@ -3804,7 +3806,7 @@ object WindowMain: TWindowMain
         ExplicitLeft = 495
       end
       object LblPort: TLabel
-        Left = 427
+        Left = 436
         Top = 110
         Width = 30
         Height = 16
@@ -3834,9 +3836,9 @@ object WindowMain: TWindowMain
       object LblPath: TLabel
         Left = 3
         Top = 58
-        Width = 110
+        Width = 128
         Height = 16
-        Caption = 'Pasta de instala'#231#227'o'
+        Caption = 'Diret'#243'rio de instala'#231#227'o'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -13
@@ -3859,7 +3861,7 @@ object WindowMain: TWindowMain
       end
       object LblDll: TLabel
         Left = 3
-        Top = 162
+        Top = 200
         Width = 179
         Height = 16
         Caption = 'Pastas para copiar a fbclient.dll'
@@ -3871,10 +3873,10 @@ object WindowMain: TWindowMain
         ParentFont = False
       end
       object BtnCopyDll: TSpeedButton
-        Left = 209
-        Top = 184
+        Left = 218
+        Top = 222
         Width = 27
-        Height = 24
+        Height = 25
         Cursor = crHandPoint
         Hint = 'Copiar dll para as pastas listadas'
         Anchors = [akTop, akRight]
@@ -3916,13 +3918,12 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActCopyDllExecute
-        ExplicitLeft = 226
       end
       object BtnDeleteDll: TSpeedButton
-        Left = 242
-        Top = 184
+        Left = 251
+        Top = 222
         Width = 27
-        Height = 24
+        Height = 25
         Cursor = crHandPoint
         Hint = 'Deletar dll das pastas listadas'
         Anchors = [akTop, akRight]
@@ -3964,13 +3965,12 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = DeleteDllExecute
-        ExplicitLeft = 259
       end
       object BtnAdd: TSpeedButton
-        Left = 57
-        Top = 184
+        Left = 66
+        Top = 222
         Width = 27
-        Height = 24
+        Height = 25
         Cursor = crHandPoint
         Hint = 'Adicionar pasta'
         Anchors = [akTop, akRight]
@@ -4012,13 +4012,12 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActAddExecute
-        ExplicitLeft = 74
       end
       object BtnRemove: TSpeedButton
-        Left = 90
-        Top = 184
+        Left = 99
+        Top = 222
         Width = 27
-        Height = 24
+        Height = 25
         Cursor = crHandPoint
         Hint = 'Remover pasta selecionada'
         Anchors = [akTop, akRight]
@@ -4060,15 +4059,14 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActRemoveExecute
-        ExplicitLeft = 107
       end
-      object BtnStart: TSpeedButton
-        Left = 447
-        Top = 552
-        Width = 166
-        Height = 53
+      object BtnExecute: TSpeedButton
+        Left = 423
+        Top = 557
+        Width = 199
+        Height = 48
+        Action = ActStart
         Anchors = [akRight, akBottom]
-        Caption = 'Iniciar'
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           2000000000000004000000000000000000000000000000000000000000BD0000
@@ -4104,13 +4102,12 @@ object WindowMain: TWindowMain
           0000000000000000000000000006000000EB0000000000000000000000AA0000
           00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
           00F1000000F9000000C600000032000000000000000000000000}
-        OnClick = BtnStartClick
       end
       object BtnLoadFolders: TSpeedButton
-        Left = 149
-        Top = 184
+        Left = 158
+        Top = 222
         Width = 27
-        Height = 24
+        Height = 25
         Cursor = crHandPoint
         Hint = 'Adicionar todas as pastas NETSide que est'#227'o em C:\'
         Anchors = [akTop, akRight]
@@ -4152,10 +4149,9 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         OnClick = ActLoadFoldersExecute
-        ExplicitLeft = 166
       end
       object BtnAddFirewall: TSpeedButton
-        Left = 495
+        Left = 504
         Top = 26
         Width = 118
         Height = 26
@@ -4170,8 +4166,8 @@ object WindowMain: TWindowMain
         ExplicitLeft = 528
       end
       object BtnRemoveFirewall: TSpeedButton
-        Left = 371
-        Top = 26
+        Left = 380
+        Top = 25
         Width = 118
         Height = 26
         Action = ActRemoveFirewall
@@ -4182,10 +4178,9 @@ object WindowMain: TWindowMain
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        ExplicitLeft = 404
       end
       object BtnServices: TSpeedButton
-        Left = 495
+        Left = 504
         Top = 132
         Width = 118
         Height = 24
@@ -4200,7 +4195,7 @@ object WindowMain: TWindowMain
         ExplicitLeft = 527
       end
       object BtnOpenDir: TSpeedButton
-        Left = 496
+        Left = 505
         Top = 80
         Width = 118
         Height = 24
@@ -4214,16 +4209,93 @@ object WindowMain: TWindowMain
         ParentFont = False
         ExplicitLeft = 528
       end
+      object LblDefaultInstance: TLabel
+        Left = 279
+        Top = 135
+        Width = 151
+        Height = 16
+        Caption = 'Default = '#39'DefaultInstance'#39
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowFrame
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object ShapeStatusPath: TShape
+        Left = 3
+        Top = 80
+        Width = 15
+        Height = 24
+        Hint = 'Diret'#243'rio N'#227'o Existente'
+        Brush.Color = clRed
+        ParentShowHint = False
+        Shape = stCircle
+        ShowHint = True
+      end
+      object ShapeStatusService: TShape
+        Left = 3
+        Top = 132
+        Width = 15
+        Height = 24
+        Hint = 'Servi'#231'o N'#227'o Instalado'
+        Brush.Color = clRed
+        ParentShowHint = False
+        Shape = stCircle
+        ShowHint = True
+      end
+      object BtnRemoveService: TSpeedButton
+        Left = 24
+        Top = 162
+        Width = 78
+        Height = 24
+        Action = ActRemoveService
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object BtnStopService: TSpeedButton
+        Left = 108
+        Top = 162
+        Width = 78
+        Height = 24
+        Action = ActStopService
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clOlive
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object BtnStartService: TSpeedButton
+        Left = 192
+        Top = 162
+        Width = 78
+        Height = 24
+        Action = ActStartService
+        Anchors = [akTop, akRight]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGreen
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
       object CheckAll: TCheckBox
         Left = 3
-        Top = 187
+        Top = 230
         Width = 17
         Height = 17
         TabOrder = 0
         OnClick = CheckAllClick
       end
       object TxtPort: TEdit
-        Left = 427
+        Left = 436
         Top = 132
         Width = 62
         Height = 24
@@ -4242,7 +4314,7 @@ object WindowMain: TWindowMain
       object BoxVersion: TComboBox
         Left = 3
         Top = 26
-        Width = 362
+        Width = 371
         Height = 26
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
@@ -4259,12 +4331,13 @@ object WindowMain: TWindowMain
         Items.Strings = (
           'Firebird 2.1.7.18553'
           'Firebird 2.5.8.27089'
-          'Firebird 3.0.4.33054')
+          'Firebird 3.0.4.33054'
+          'Firebird 4.0.0.19630')
       end
       object TxtPath: TEdit
-        Left = 3
+        Left = 24
         Top = 80
-        Width = 453
+        Width = 441
         Height = 24
         Anchors = [akLeft, akTop, akRight]
         AutoSize = False
@@ -4277,27 +4350,20 @@ object WindowMain: TWindowMain
         TabOrder = 3
         Text = 'C:\Program Files (x86)\Firebird\Firebird_2_1'
       end
-      object TxtServiceName: TEdit
-        Left = 3
-        Top = 132
-        Width = 418
-        Height = 24
-        Anchors = [akLeft, akTop, akRight]
-        AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
+      object MemoLog: TMemo
+        Left = 284
+        Top = 162
+        Width = 337
+        Height = 384
+        Anchors = [akTop, akRight, akBottom]
+        ReadOnly = True
         TabOrder = 4
-        Text = 'NETSide2.1'
       end
       object ListDll: TCheckListBox
         Left = 3
-        Top = 214
-        Width = 266
-        Height = 332
+        Top = 248
+        Width = 275
+        Height = 298
         OnClickCheck = ListDllClickCheck
         Anchors = [akLeft, akTop, akRight, akBottom]
         DoubleBuffered = False
@@ -4310,41 +4376,43 @@ object WindowMain: TWindowMain
         ParentFont = False
         TabOrder = 5
       end
-      object MemoLog: TMemo
-        Left = 275
-        Top = 162
-        Width = 337
-        Height = 384
-        Anchors = [akTop, akRight, akBottom]
-        ReadOnly = True
-        TabOrder = 6
-      end
-      object RadioGroupAction: TRadioGroup
-        Left = 3
-        Top = 552
-        Width = 438
-        Height = 51
-        Caption = 'A'#231#227'o'
-        Columns = 2
+      object TxtServiceName: TEdit
+        Left = 24
+        Top = 132
+        Width = 249
+        Height = 24
+        Anchors = [akLeft, akTop, akRight]
+        AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = []
-        ItemIndex = 0
-        Items.Strings = (
-          'Instalar'
-          'Desinstalar')
         ParentFont = False
+        TabOrder = 6
+        Text = 'NETSide2.1'
+      end
+      object RadioGroupMethod: TRadioGroup
+        Left = 3
+        Top = 552
+        Width = 414
+        Height = 53
+        Caption = 'M'#233'todo'
+        Columns = 2
+        ItemIndex = 1
+        Items.Strings = (
+          'Desinstalar'
+          'Instalar')
         TabOrder = 7
+        OnClick = RadioGroupMethodClick
       end
     end
   end
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 160
-    Top = 128
+    Left = 24
+    Top = 280
     Bitmap = {
       494C010108005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -4754,21 +4822,21 @@ object WindowMain: TWindowMain
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 264
-    Top = 73
+    Left = 80
+    Top = 337
   end
   object OpenDllPath: TFileOpenDialog
     FavoriteLinks = <>
     FileName = 'C:\NETSide\db'
     FileTypes = <>
     Options = [fdoPickFolders]
-    Left = 192
-    Top = 80
+    Left = 80
+    Top = 280
   end
   object Actions: TActionList
     Images = Images
-    Left = 224
-    Top = 128
+    Left = 24
+    Top = 336
     object ActPath: TAction
       Caption = 'ActPath'
       ImageIndex = 0
@@ -4816,6 +4884,18 @@ object WindowMain: TWindowMain
       Caption = 'Abrir no Explorer'
       OnExecute = ActOpenDirExecute
     end
+    object ActRemoveService: TAction
+      Caption = 'Remover'
+      OnExecute = ActRemoveServiceExecute
+    end
+    object ActStopService: TAction
+      Caption = 'Pausar'
+      OnExecute = ActStopServiceExecute
+    end
+    object ActStartService: TAction
+      Caption = 'Iniciar'
+      OnExecute = ActStartServiceExecute
+    end
     object ActServices: TAction
       Caption = 'Servi'#231'os'
       OnExecute = ActServicesExecute
@@ -4835,5 +4915,14 @@ object WindowMain: TWindowMain
       ShortCut = 27
       OnExecute = ActEscExecute
     end
+    object ActStart: TAction
+      Caption = 'Iniciar'
+      OnExecute = ActStartExecute
+    end
+  end
+  object TimerStatus: TTimer
+    OnTimer = TimerStatusTimer
+    Left = 172
+    Top = 288
   end
 end
