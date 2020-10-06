@@ -134,8 +134,6 @@ function TInstallConfig.SourceDll: string;
 begin
   TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
 
-  //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data\Dlls.zip', TUtils.Temp);
-
   TUtils.ExtractResourceZip('DataDlls', TUtils.Temp);
 
   Result := TUtils.Temp + '\Dlls' + DllName;
