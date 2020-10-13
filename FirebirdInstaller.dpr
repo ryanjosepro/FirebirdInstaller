@@ -30,7 +30,7 @@ uses
   MyUtils in 'Code\MyUtils.pas',
   MyArrays in 'Code\MyArrays.pas',
   MyDialogs in 'Code\MyDialogs.pas',
-  Installation in 'Controller\Installation.pas';
+  Install in 'Controller\Install.pas';
 
 {$R *.res}
 

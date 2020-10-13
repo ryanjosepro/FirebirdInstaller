@@ -95,7 +95,6 @@ __recovery/
 *.ini
 *.dll
 *.msi
-*.zip
 *.rar
 
 *.LIC
