@@ -50,7 +50,7 @@ type
 
     class procedure AddFirewallPort(RuleName, Port: string);
 
-    class procedure DeleteFirewallPort(RuleName, Port: string);
+    class procedure DeleteFirewallPort(RuleName: string);
 
     class procedure ExtractResourceZip(ResourceName, Path: string);
 
@@ -373,9 +373,9 @@ begin
   ExecDos('netsh advfirewall firewall add rule name="' + RuleName + '" dir=out action=allow protocol=TCP localport=' + Port);
 end;
 
-class procedure TUtils.DeleteFirewallPort(RuleName, Port: string);
+class procedure TUtils.DeleteFirewallPort(RuleName: string);
 begin
-  ExecDos('netsh advfirewall firewall delete rule name="' + RuleName + '" protocol=TCP localport=' + Port);
+  ExecDos('netsh advfirewall firewall delete rule name="' + RuleName + '"');
 end;
 
 class procedure TUtils.ExtractResourceZip(ResourceName, Path: string);

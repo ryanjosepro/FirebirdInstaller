@@ -225,7 +225,7 @@ end;
 
 procedure TWindowMain.ActRemoveFirewallExecute(Sender: TObject);
 begin
-  TUtils.DeleteFirewallPort('Firebird' + TUtils.IfEmpty(TxtServiceName.Text, 'DefaultInstance'), TxtPort.Text);
+  TUtils.DeleteFirewallPort('Firebird' + TUtils.IfEmpty(TxtServiceName.Text, 'DefaultInstance'));
   ShowMessage('Porta e serviço removidos do firewall!');
 end;
 
@@ -255,9 +255,13 @@ begin
 end;
 
 procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
+var
+  IsEnabled: boolean;
 begin
-  TxtPath.Enabled := RadioGroupMethod.ItemIndex = 1;
-  BtnPath.Enabled := RadioGroupMethod.ItemIndex = 1;
+  IsEnabled := RadioGroupMethod.ItemIndex = 1;
+  TxtPath.Enabled := IsEnabled;
+  BtnPath.Enabled := IsEnabled;
+  TxtPort.Enabled := IsEnabled;
 end;
 
 procedure TWindowMain.ActStartExecute(Sender: TObject);

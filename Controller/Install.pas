@@ -76,7 +76,7 @@ end;
 
 procedure TInstallConfig.SetPort(const Value: string);
 begin
-  FPort := Value;
+  FPort := TUtils.IfEmpty(Value, '3050');
 end;
 
 procedure TInstallConfig.SetDllPaths(const Value: TStringList);
@@ -183,9 +183,7 @@ begin
   end;
 end;
 
-
-
-{ TInstallation }
+{ TInstall }
 
 constructor TInstall.Create(Configs: TInstallConfig);
 begin
@@ -500,7 +498,7 @@ begin
 
               Log('Removendo do firewall');
 
-              TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName, Configs.Port);
+              TUtils.DeleteFirewallPort('Firebird ' + Configs.ServiceName);
 
               Log('');
               Log('*******************************');
