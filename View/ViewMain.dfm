@@ -3753,8 +3753,6 @@ object WindowMain: TWindowMain
     object TabSetup: TTabSheet
       Caption = 'Setup'
       ImageIndex = 1
-      ExplicitLeft = 8
-      ExplicitTop = 26
       DesignSize = (
         630
         608)

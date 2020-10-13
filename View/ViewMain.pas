@@ -257,6 +257,7 @@ end;
 procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
 begin
   TxtPath.Enabled := RadioGroupMethod.ItemIndex = 1;
+  BtnPath.Enabled := RadioGroupMethod.ItemIndex = 1;
 end;
 
 procedure TWindowMain.ActStartExecute(Sender: TObject);
