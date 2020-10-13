@@ -1,4 +1,4 @@
-unit Installation;
+unit Install;
 
 interface
 
@@ -43,7 +43,7 @@ type
     function SourceDll: string;
   end;
 
-  TInstallation = class
+  TInstall = class
   private
     Configs: TInstallConfig;
     procedure Log(Text: string);
@@ -57,7 +57,7 @@ type
 
 implementation
 
-{ TInstallationConfigs }
+{ TInstallConfig }
 
 procedure TInstallConfig.SetVersion(const Value: TVersion);
 begin
@@ -187,12 +187,12 @@ end;
 
 { TInstallation }
 
-constructor TInstallation.Create(Configs: TInstallConfig);
+constructor TInstall.Create(Configs: TInstallConfig);
 begin
   self.Configs := Configs;
 end;
 
-procedure TInstallation.Log(Text: string);
+procedure TInstall.Log(Text: string);
 begin
   if Configs.Log <> nil then
   begin
@@ -202,7 +202,7 @@ begin
   end;
 end;
 
-procedure TInstallation.CopyDll;
+procedure TInstall.CopyDll;
 var
   DllFolder: string;
 begin
@@ -213,7 +213,7 @@ begin
   end;
 end;
 
-procedure TInstallation.DeleteDll;
+procedure TInstall.DeleteDll;
 var
   DllFolder: string;
 begin
@@ -223,7 +223,7 @@ begin
   end;
 end;
 
-procedure TInstallation.Install;
+procedure TInstall.Install;
 var
   Cancel: boolean;
   ConfFile: TStringList;
@@ -375,7 +375,7 @@ begin
   end;
 end;
 
-procedure TInstallation.Uninstall;
+procedure TInstall.Uninstall;
 var
   ConfFile: TStringList;
   PathFiles: TArray<string>;

@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, Vcl.CheckLst, Vcl.Grids,
   IOUtils, StrUtils,
-  MyUtils, Installation, Vcl.ComCtrls, WinSvc, Vcl.ExtCtrls;
+  MyUtils, Install, Vcl.ComCtrls, WinSvc, Vcl.ExtCtrls;
 
 type
   TWindowMain = class(TForm)
@@ -89,7 +89,7 @@ type
     procedure ActStopServiceExecute(Sender: TObject);
     procedure ActStartServiceExecute(Sender: TObject);
   private
-    function GetInstallation: TInstallation;
+    function GetInstallation: TInstall;
     procedure UpdateButtons;
   end;
 
@@ -189,7 +189,7 @@ end;
 
 procedure TWindowMain.ActCopyDllExecute(Sender: TObject);
 var
-  Installation: TInstallation;
+  Installation: TInstall;
 begin
   try
     Installation := GetInstallation;
@@ -204,7 +204,7 @@ end;
 
 procedure TWindowMain.DeleteDllExecute(Sender: TObject);
 var
-  Installation: TInstallation;
+  Installation: TInstall;
 begin
   try
     Installation := GetInstallation;
@@ -219,13 +219,13 @@ end;
 
 procedure TWindowMain.ActAddFirewallExecute(Sender: TObject);
 begin
-  TUtils.AddFirewallPort('Firebird ' + TxtServiceName.Text, TxtPort.Text);
+  TUtils.AddFirewallPort('Firebird' + TUtils.IfEmpty(TxtServiceName.Text, 'DefaultInstance'), TxtPort.Text);
   ShowMessage('Porta e serviço adicionados no firewall!');
 end;
 
 procedure TWindowMain.ActRemoveFirewallExecute(Sender: TObject);
 begin
-  TUtils.DeleteFirewallPort('Firebird ' + TxtServiceName.Text, TxtPort.Text);
+  TUtils.DeleteFirewallPort('Firebird' + TUtils.IfEmpty(TxtServiceName.Text, 'DefaultInstance'), TxtPort.Text);
   ShowMessage('Porta e serviço removidos do firewall!');
 end;
 
@@ -272,7 +272,7 @@ end;
 
 procedure TWindowMain.ActInstallExecute(Sender: TObject);
 var
-  Installation: TInstallation;
+  Installation: TInstall;
 begin
   try
     Screen.Cursor := crHourGlass;
@@ -290,7 +290,7 @@ end;
 
 procedure TWindowMain.ActUninstallExecute(Sender: TObject);
 var
-  Installation: TInstallation;
+  Installation: TInstall;
 begin
   try
     screen.Cursor := crHourGlass;
@@ -319,7 +319,7 @@ begin
   Close;
 end;
 
-function TWindowMain.GetInstallation: TInstallation;
+function TWindowMain.GetInstallation: TInstall;
 var
   Configs: TInstallConfig;
   I: integer;
@@ -345,7 +345,7 @@ begin
 
   end;
 
-  Result := TInstallation.Create(Configs);
+  Result := TInstall.Create(Configs);
 end;
 
 procedure TWindowMain.BoxVersionChange(Sender: TObject);
