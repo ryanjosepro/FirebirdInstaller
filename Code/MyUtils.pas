@@ -364,7 +364,7 @@ end;
 //Retorna o diretório temp
 class function TUtils.Temp: string;
 begin
-  Result := GetEnvironmentVariable('TEMP');
+  Result := GetEnvironmentVariable('TEMP') + '\';
 end;
 
 class procedure TUtils.AddFirewallPort(RuleName, Port: string);

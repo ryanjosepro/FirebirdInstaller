@@ -106,54 +106,23 @@ begin
 end;
 
 //Fontes
-function TInstallConfig.Source(Extract: boolean = true): string;
-begin
-  if Extract then
-  begin
-    TUtils.DeleteIfExistsDir(TUtils.Temp + FolderName);
-
-    //TZipFile.ExtractZipFile(TUtils.AppPath + 'Data' + FolderName + '.zip', TUtils.Temp);
-
-    TUtils.ExtractResourceZip(ResourceName, TUtils.Temp);
-  end;
-
-  Result := TUtils.Temp + FolderName;
-end;
-
-function TInstallConfig.SourceBin(Extract: boolean = false): string;
-begin
-  case Version of
-  vrFb21, vrFb25:
-    Result := Source(Extract) + '\Bin';
-  vrFb30, vrFb40:
-    Result := Source(Extract);
-  end;
-end;
-
-function TInstallConfig.SourceDll: string;
-begin
-  TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
-
-  TUtils.ExtractResourceZip('DataDlls', TUtils.Temp);
-
-  Result := TUtils.Temp + '\Dlls' + DllName;
-end;
 
 //Nome da pasta pela versão
 function TInstallConfig.FolderName: string;
 begin
   case Version of
   vrFb21:
-    Result := '\Firebird_2_1';
+    Result := 'Firebird_2_1';
   vrFb25:
-    Result := '\Firebird_2_5';
+    Result := 'Firebird_2_5';
   vrFb30:
-    Result := '\Firebird_3_0';
+    Result := 'Firebird_3_0';
   vrFb40:
-    Result := '\Firebird_4_0';
+    Result := 'Firebird_4_0';
   end;
 end;
 
+//Nome da dll pela versão
 function TInstallConfig.DllName: string;
 begin
   case Version of
@@ -181,6 +150,37 @@ begin
   vrFb40:
     Result := 'DataFB40';
   end;
+end;
+
+function TInstallConfig.Source(Extract: boolean = true): string;
+begin
+  Result := TUtils.Temp + 'FirebirdInstaller\' + FolderName;
+
+  if Extract then
+  begin
+    TUtils.DeleteIfExistsDir(Result);
+
+    TUtils.ExtractResourceZip(ResourceName, TUtils.Temp + 'FirebirdInstaller\');
+  end;
+end;
+
+function TInstallConfig.SourceBin(Extract: boolean = false): string;
+begin
+  case Version of
+  vrFb21, vrFb25:
+    Result := Source(Extract) + '\Bin';
+  vrFb30, vrFb40:
+    Result := Source(Extract);
+  end;
+end;
+
+function TInstallConfig.SourceDll: string;
+begin
+  TUtils.DeleteIfExistsDir(TUtils.Temp + '\Dlls' + DllName);
+
+  TUtils.ExtractResourceZip('DataDlls', TUtils.Temp);
+
+  Result := TUtils.Temp + '\Dlls' + DllName;
 end;
 
 { TInstall }
