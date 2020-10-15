@@ -65,6 +65,8 @@ type
     ActRemoveService: TAction;
     ActStopService: TAction;
     ActStartService: TAction;
+    ActChangeToInstall: TAction;
+    ActChangeToUninstall: TAction;
     procedure ActPathExecute(Sender: TObject);
     procedure ActAddExecute(Sender: TObject);
     procedure ActRemoveExecute(Sender: TObject);
@@ -88,6 +90,8 @@ type
     procedure ActRemoveServiceExecute(Sender: TObject);
     procedure ActStopServiceExecute(Sender: TObject);
     procedure ActStartServiceExecute(Sender: TObject);
+    procedure ActChangeToInstallExecute(Sender: TObject);
+    procedure ActChangeToUninstallExecute(Sender: TObject);
   private
     function GetInstallation: TInstall;
     procedure UpdateButtons;
@@ -256,21 +260,21 @@ end;
 
 procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
 var
-  IsEnabled: boolean;
+  IsInstall: boolean;
 begin
-  IsEnabled := RadioGroupMethod.ItemIndex = 1;
-  TxtPath.Enabled := IsEnabled;
-  BtnPath.Enabled := IsEnabled;
-  TxtPort.Enabled := IsEnabled;
+  IsInstall := RadioGroupMethod.ItemIndex = 0;
+  TxtPath.Enabled := IsInstall;
+  BtnPath.Enabled := IsInstall;
+  TxtPort.Enabled := IsInstall;
 end;
 
 procedure TWindowMain.ActStartExecute(Sender: TObject);
 begin
   case RadioGroupMethod.ItemIndex of
   0:
-    ActUninstall.Execute;
-  1:
     ActInstall.Execute;
+  1:
+    ActUninstall.Execute;
   end;
 end;
 
@@ -416,6 +420,16 @@ begin
 
   BtnCopyDll.Enabled := Checked;
   BtnDeleteDll.Enabled := Checked;
+end;
+
+procedure TWindowMain.ActChangeToInstallExecute(Sender: TObject);
+begin
+  RadioGroupMethod.ItemIndex := 0;
+end;
+
+procedure TWindowMain.ActChangeToUninstallExecute(Sender: TObject);
+begin
+  RadioGroupMethod.ItemIndex := 1;
 end;
 
 end.

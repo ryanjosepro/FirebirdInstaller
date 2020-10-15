@@ -4397,10 +4397,10 @@ object WindowMain: TWindowMain
         Height = 53
         Caption = 'M'#233'todo'
         Columns = 2
-        ItemIndex = 1
+        ItemIndex = 0
         Items.Strings = (
-          'Desinstalar'
-          'Instalar')
+          'Instalar (F1)'
+          'Desinstalar (F2)')
         TabOrder = 7
         OnClick = RadioGroupMethodClick
       end
@@ -4898,6 +4898,11 @@ object WindowMain: TWindowMain
       Caption = 'Servi'#231'os'
       OnExecute = ActServicesExecute
     end
+    object ActStart: TAction
+      Caption = 'Iniciar (F9)'
+      ShortCut = 120
+      OnExecute = ActStartExecute
+    end
     object ActInstall: TAction
       Caption = 'Instalar'
       ImageIndex = 6
@@ -4913,9 +4918,13 @@ object WindowMain: TWindowMain
       ShortCut = 27
       OnExecute = ActEscExecute
     end
-    object ActStart: TAction
-      Caption = 'Iniciar'
-      OnExecute = ActStartExecute
+    object ActChangeToInstall: TAction
+      ShortCut = 112
+      OnExecute = ActChangeToInstallExecute
+    end
+    object ActChangeToUninstall: TAction
+      ShortCut = 113
+      OnExecute = ActChangeToUninstallExecute
     end
   end
   object TimerStatus: TTimer
