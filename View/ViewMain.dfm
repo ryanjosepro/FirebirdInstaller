@@ -4289,7 +4289,7 @@ object WindowMain: TWindowMain
         Top = 230
         Width = 17
         Height = 17
-        TabOrder = 0
+        TabOrder = 4
         OnClick = CheckAllClick
       end
       object TxtPort: TEdit
@@ -4306,7 +4306,7 @@ object WindowMain: TWindowMain
         Font.Style = []
         NumbersOnly = True
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 3
         Text = '3050'
       end
       object BoxVersion: TComboBox
@@ -4323,7 +4323,7 @@ object WindowMain: TWindowMain
         Font.Style = []
         ItemIndex = 0
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 0
         Text = 'Firebird 2.1.7.18553'
         OnChange = BoxVersionChange
         Items.Strings = (
@@ -4345,7 +4345,7 @@ object WindowMain: TWindowMain
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 1
         Text = 'C:\Program Files (x86)\Firebird\Firebird_2_1'
       end
       object MemoLog: TMemo
@@ -4355,7 +4355,7 @@ object WindowMain: TWindowMain
         Height = 384
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
-        TabOrder = 4
+        TabOrder = 6
       end
       object ListDll: TCheckListBox
         Left = 3
@@ -4387,7 +4387,7 @@ object WindowMain: TWindowMain
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 6
+        TabOrder = 2
         Text = 'NETSide2.1'
       end
       object RadioGroupMethod: TRadioGroup
